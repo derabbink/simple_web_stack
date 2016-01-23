@@ -1,0 +1,17 @@
+## Gradle
+.gradle
+build/
+
+## Eclipse files
+#.project
+#.classpath
+.settings/
+bin/
+tmp/
+
+## Java artifacts
+*.class
+*.jar
+*.war
+*.ear
+
