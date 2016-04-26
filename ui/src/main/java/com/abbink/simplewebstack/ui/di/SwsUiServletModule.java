@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import com.abbink.simplewebstack.common.auth.UsernamePasswordRealm;
+import com.abbink.simplewebstack.common.jersey.shiro.AuthInjectableProvider;
 import com.abbink.simplewebstack.common.jersey.shiro.di.JerseyShiroModule;
 import com.abbink.simplewebstack.common.metrics.response.HttpStatusCodeMetricResourceFilterFactory;
 import com.abbink.simplewebstack.ui.auth.di.ShiroAuthModule;
@@ -28,9 +30,11 @@ public class SwsUiServletModule extends ServletModule {
 	@Override
 	protected void configureServlets() {
 		// hook Shiro into Guice Servlet
-		install(new ShiroAuthModule(servletContext));
+		//install(new ShiroAuthModule(servletContext));
+		requireBinding(UsernamePasswordRealm.class);
 		// Hook Shiro into Jersey
-		install(new JerseyShiroModule());
+		//install(new JerseyShiroModule());
+		requireBinding(AuthInjectableProvider.class);
 		// hook Jersey into Guice Servlet
 		bind(GuiceContainer.class);
 		// hook Freemarker into Jersey

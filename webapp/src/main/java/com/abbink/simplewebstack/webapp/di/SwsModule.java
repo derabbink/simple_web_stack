@@ -3,9 +3,12 @@ package com.abbink.simplewebstack.webapp.di;
 import javax.servlet.ServletContext;
 
 import com.abbink.simplewebstack.api.di.SwsApiServletModule;
+import com.abbink.simplewebstack.common.auth.BearerTokenRealm;
+import com.abbink.simplewebstack.common.auth.UsernamePasswordRealm;
 import com.abbink.simplewebstack.common.auth.di.SecurityConfigModule;
 import com.abbink.simplewebstack.common.data.di.DataModule;
 import com.abbink.simplewebstack.common.data.migration.di.DataMigrationModule;
+import com.abbink.simplewebstack.common.jersey.shiro.di.JerseyShiroModule;
 import com.abbink.simplewebstack.common.metrics.di.MetricsModule;
 import com.abbink.simplewebstack.ui.di.SwsUiServletModule;
 import com.abbink.simplewebstack.webapp.http.error.di.ErrorModule;
@@ -26,6 +29,9 @@ public class SwsModule extends AbstractModule {
 		install(new DataMigrationModule());
 		
 		install(new SecurityConfigModule());
+		install(new JerseyShiroModule());
+		bind(UsernamePasswordRealm.class);
+		bind(BearerTokenRealm.class);
 		
 		install(new SwsApiServletModule(servletContext));
 		install(new SwsUiServletModule(servletContext));

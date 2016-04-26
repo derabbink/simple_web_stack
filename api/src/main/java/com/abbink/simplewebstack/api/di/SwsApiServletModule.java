@@ -9,6 +9,8 @@ import com.abbink.simplewebstack.api.auth.di.ShiroAuthModule;
 import com.abbink.simplewebstack.api.http.db.di.DbModule;
 import com.abbink.simplewebstack.api.http.error.di.ErrorModule;
 import com.abbink.simplewebstack.api.http.sandwich.di.SandwichModule;
+import com.abbink.simplewebstack.common.auth.BearerTokenRealm;
+import com.abbink.simplewebstack.common.jersey.shiro.AuthInjectableProvider;
 import com.abbink.simplewebstack.common.jersey.shiro.di.JerseyShiroModule;
 import com.abbink.simplewebstack.common.metrics.response.HttpStatusCodeMetricResourceFilterFactory;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
@@ -29,9 +31,11 @@ public class SwsApiServletModule extends ServletModule {
 	@Override
 	protected void configureServlets() {
 		// hook Shiro into Guice Servlet
-		install(new ShiroAuthModule(servletContext));
+		//install(new ShiroAuthModule(servletContext));
+		requireBinding(BearerTokenRealm.class);
 		// Hook Shiro into Jersey
-		install(new JerseyShiroModule());
+		//install(new JerseyShiroModule());
+		requireBinding(AuthInjectableProvider.class);
 		// hook Jersey into Guice Servlet
 		bind(GuiceContainer.class);
 		// hook Jackson into Jersey as the POJO <-> JSON mapper
