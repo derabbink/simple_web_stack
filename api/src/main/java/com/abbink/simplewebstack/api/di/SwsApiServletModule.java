@@ -9,6 +9,7 @@ import com.abbink.simplewebstack.api.auth.di.ShiroAuthModule;
 import com.abbink.simplewebstack.api.http.db.di.DbModule;
 import com.abbink.simplewebstack.api.http.error.di.ErrorModule;
 import com.abbink.simplewebstack.api.http.sandwich.di.SandwichModule;
+import com.abbink.simplewebstack.common.auth.AuthResourceFilterFactory;
 import com.abbink.simplewebstack.common.auth.BearerTokenRealm;
 import com.abbink.simplewebstack.common.jersey.shiro.AuthInjectableProvider;
 import com.abbink.simplewebstack.common.jersey.shiro.di.JerseyShiroModule;
@@ -48,7 +49,8 @@ public class SwsApiServletModule extends ServletModule {
 		Map<String, String> guiceContainerConfig = new HashMap<String, String>();
 		guiceContainerConfig.put(
 			ResourceConfig.PROPERTY_RESOURCE_FILTER_FACTORIES,
-			HttpStatusCodeMetricResourceFilterFactory.class.getCanonicalName()
+			HttpStatusCodeMetricResourceFilterFactory.class.getCanonicalName() +","+
+			AuthResourceFilterFactory.class.getCanonicalName()
 		);
 		guiceContainerConfig.put(
 			PackagesResourceConfig.PROPERTY_PACKAGES,

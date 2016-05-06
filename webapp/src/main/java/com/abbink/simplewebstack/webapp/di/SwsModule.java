@@ -5,6 +5,8 @@ import javax.servlet.ServletContext;
 import com.abbink.simplewebstack.api.di.SwsApiServletModule;
 import com.abbink.simplewebstack.common.auth.BearerTokenRealm;
 import com.abbink.simplewebstack.common.auth.UsernamePasswordRealm;
+import com.abbink.simplewebstack.common.auth.di.AuthInterceptorModule;
+import com.abbink.simplewebstack.common.auth.di.AuthModule;
 import com.abbink.simplewebstack.common.auth.di.SecurityConfigModule;
 import com.abbink.simplewebstack.common.data.di.DataModule;
 import com.abbink.simplewebstack.common.data.migration.di.DataMigrationModule;
@@ -32,6 +34,8 @@ public class SwsModule extends AbstractModule {
 		install(new JerseyShiroModule());
 		bind(UsernamePasswordRealm.class);
 		bind(BearerTokenRealm.class);
+		//install(new AuthInterceptorModule());
+		install(new AuthModule());
 		
 		install(new SwsApiServletModule(servletContext));
 		install(new SwsUiServletModule(servletContext));
