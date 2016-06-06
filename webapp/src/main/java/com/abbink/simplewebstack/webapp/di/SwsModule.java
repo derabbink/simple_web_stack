@@ -1,22 +1,25 @@
 package com.abbink.simplewebstack.webapp.di;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 
-import com.abbink.simplewebstack.api.di.SwsApiServletModule;
-import com.abbink.simplewebstack.common.auth.BearerTokenRealm;
-import com.abbink.simplewebstack.common.auth.UsernamePasswordRealm;
-import com.abbink.simplewebstack.common.auth.di.AuthInterceptorModule;
+import com.abbink.simplewebstack.api.di.SwsApiModule;
 import com.abbink.simplewebstack.common.auth.di.AuthModule;
-import com.abbink.simplewebstack.common.auth.di.SecurityConfigModule;
+import com.abbink.simplewebstack.common.auth.jersey.AuthResourceFilterFactory;
 import com.abbink.simplewebstack.common.data.di.DataModule;
 import com.abbink.simplewebstack.common.data.migration.di.DataMigrationModule;
-import com.abbink.simplewebstack.common.jersey.shiro.di.JerseyShiroModule;
 import com.abbink.simplewebstack.common.metrics.di.MetricsModule;
-import com.abbink.simplewebstack.ui.di.SwsUiServletModule;
+import com.abbink.simplewebstack.common.metrics.response.HttpStatusCodeMetricResourceFilterFactory;
+import com.abbink.simplewebstack.ui.di.SwsUiModule;
 import com.abbink.simplewebstack.webapp.http.error.di.ErrorModule;
-import com.google.inject.AbstractModule;
+import com.google.inject.servlet.ServletModule;
+import com.sun.jersey.api.core.PackagesResourceConfig;
+import com.sun.jersey.api.core.ResourceConfig;
+import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 
-public class SwsModule extends AbstractModule {
+public class SwsModule extends ServletModule {
 	
 	private ServletContext servletContext;
 	
@@ -25,21 +28,31 @@ public class SwsModule extends AbstractModule {
 	}
 	
 	@Override
-	protected void configure() {
+	protected void configureServlets() {
 		install(new MetricsModule());
 		install(new DataModule());
 		install(new DataMigrationModule());
 		
-		install(new SecurityConfigModule());
-		install(new JerseyShiroModule());
-		bind(UsernamePasswordRealm.class);
-		bind(BearerTokenRealm.class);
-		//install(new AuthInterceptorModule());
 		install(new AuthModule());
 		
-		install(new SwsApiServletModule(servletContext));
-		install(new SwsUiServletModule(servletContext));
+		// hook Jersey into Guice Servlet
+		bind(GuiceContainer.class);
+		install(new SwsApiModule());
+		install(new SwsUiModule());
 		install(new ErrorModule());
+		
+		
+		Map<String, String> guiceContainerConfig = new HashMap<String, String>();
+		guiceContainerConfig.put(
+			ResourceConfig.PROPERTY_RESOURCE_FILTER_FACTORIES,
+			HttpStatusCodeMetricResourceFilterFactory.class.getCanonicalName() +","+
+			AuthResourceFilterFactory.class.getCanonicalName()
+		);
+		guiceContainerConfig.put(
+			PackagesResourceConfig.PROPERTY_PACKAGES,
+			SwsApiModule.getResourcePackage() +";"+ SwsUiModule.getResourcePackage()
+		);
+		serve("/*").with(GuiceContainer.class, guiceContainerConfig);
 	}
 	
 }

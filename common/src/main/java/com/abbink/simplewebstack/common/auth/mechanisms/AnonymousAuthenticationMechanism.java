@@ -1,9 +1,12 @@
 package com.abbink.simplewebstack.common.auth.mechanisms;
 
+import javax.inject.Singleton;
+
 import lombok.extern.java.Log;
 
 import com.sun.jersey.spi.container.ContainerRequest;
 
+@Singleton
 @Log
 public class AnonymousAuthenticationMechanism extends AuthenticationMechanism {
 	

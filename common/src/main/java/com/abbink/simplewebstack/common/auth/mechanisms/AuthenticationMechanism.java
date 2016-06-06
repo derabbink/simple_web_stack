@@ -6,6 +6,11 @@ import com.sun.jersey.spi.container.ResourceFilter;
 
 public abstract class AuthenticationMechanism implements ResourceFilter, ContainerRequestFilter {
 	
+	/**
+	 * Key used to store Subject instance in a ContainerRequest's properties
+	 */
+	public static final String SUBJECT_KEY = AuthenticationMechanism.class.getName() + "_SUBJECT_KEY";
+	
 	@Override
 	public final ContainerRequestFilter getRequestFilter() {
 		return this;

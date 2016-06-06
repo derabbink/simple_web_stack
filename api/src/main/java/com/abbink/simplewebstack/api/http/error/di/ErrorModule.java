@@ -2,11 +2,11 @@ package com.abbink.simplewebstack.api.http.error.di;
 
 import static com.abbink.simplewebstack.api.utils.Constants.BASE_PATH_SEGMENT;
 
-import org.apache.shiro.authc.AuthenticationException;
-
-import com.abbink.simplewebstack.api.http.error.AuthenticationExceptionHandler;
 import com.abbink.simplewebstack.api.http.error.Error403Resource;
-import com.abbink.simplewebstack.api.http.error.NotFoundExceptionHandler;
+import com.abbink.simplewebstack.api.http.error.NotFoundExceptionMapper;
+import com.abbink.simplewebstack.api.http.error.ThrowableMapper;
+import com.abbink.simplewebstack.api.http.error.WebAppErrorMapper;
+import com.abbink.simplewebstack.common.errors.WebAppError;
 import com.abbink.simplewebstack.common.jersey.ext.SlaveExceptionMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
@@ -19,11 +19,15 @@ public class ErrorModule extends AbstractModule {
 	protected void configure() {
 		bind(new TypeLiteral<SlaveExceptionMapper<NotFoundException>>(){})
 			.annotatedWith(Names.named(BASE_PATH_SEGMENT))
-			.to(NotFoundExceptionHandler.class)
+			.to(NotFoundExceptionMapper.class)
 			.in(Scopes.SINGLETON);
-		bind(new TypeLiteral<SlaveExceptionMapper<AuthenticationException>>(){})
+		bind(new TypeLiteral<SlaveExceptionMapper<WebAppError>>(){})
 			.annotatedWith(Names.named(BASE_PATH_SEGMENT))
-			.to(AuthenticationExceptionHandler.class)
+			.to(WebAppErrorMapper.class)
+			.in(Scopes.SINGLETON);
+		bind(new TypeLiteral<SlaveExceptionMapper<Throwable>>(){})
+			.annotatedWith(Names.named(BASE_PATH_SEGMENT))
+			.to(ThrowableMapper.class)
 			.in(Scopes.SINGLETON);
 		
 		bind(Error403Resource.class);

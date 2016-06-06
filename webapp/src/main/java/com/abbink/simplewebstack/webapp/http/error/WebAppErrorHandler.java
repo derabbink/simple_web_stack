@@ -15,23 +15,19 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import com.abbink.simplewebstack.api.utils.Constants;
+import com.abbink.simplewebstack.common.errors.WebAppError;
 import com.abbink.simplewebstack.common.jersey.ext.SlaveExceptionMapper;
-import com.sun.jersey.api.NotFoundException;
 
 @Singleton
 @Provider
-public class NotFoundExceptionHandler implements ExceptionMapper<NotFoundException>{
-	
-	private enum Handler {
-		API, UI
-	}
+public class WebAppErrorHandler implements ExceptionMapper<WebAppError> {
 	
 	@Inject
 	@Named(com.abbink.simplewebstack.api.utils.Constants.BASE_PATH_SEGMENT)
-	private SlaveExceptionMapper<NotFoundException> apiHandler;
+	private SlaveExceptionMapper<WebAppError> apiMapper;
 	@Inject
 	@Named(com.abbink.simplewebstack.ui.utils.Constants.BASE_PATH_SEGMENT)
-	private SlaveExceptionMapper<NotFoundException> uiHandler;
+	private SlaveExceptionMapper<WebAppError> uiMapper;
 	
 	@Context
 	private HttpHeaders headers;
@@ -40,30 +36,21 @@ public class NotFoundExceptionHandler implements ExceptionMapper<NotFoundExcepti
 	@Context
 	UriInfo uriInfo;
 	
-	public Response toResponse(NotFoundException ex){
-		try {
-			return delegateToSlaveHandler(ex);
-		} catch (Error e) {
-			// TODO delegate to even more generic error handler
-			throw e;
-		}
-		
-	}
-	
-	private Response delegateToSlaveHandler(NotFoundException ex) {
-		Handler handler = Handler.UI;
+	@Override
+	public Response toResponse(WebAppError exception) {
+		HandlerType handler = HandlerType.UI;
 		List<PathSegment> segments = uriInfo.getPathSegments();
 		if (!segments.isEmpty() &&
 			Constants.BASE_PATH_SEGMENT.equals(segments.iterator().next().toString())) {
-			handler = Handler.API;
+			handler = HandlerType.API;
 		}
 		
 		switch (handler) {
 			case API:
-				return apiHandler.toResponse(ex, headers, request);
+				return apiMapper.toResponse(exception, headers, request);
 			case UI:
 			default:
-				return uiHandler.toResponse(ex, headers, request);
+				return uiMapper.toResponse(exception, headers, request);
 		}
 	}
 }

@@ -17,7 +17,6 @@ import javax.ws.rs.core.MediaType;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 
-import com.abbink.simplewebstack.common.jersey.shiro.Auth;
 import com.sun.jersey.api.view.Viewable;
 
 // TODO change to custom path, once FormAuthenticationFilter setters are injected
@@ -27,7 +26,7 @@ public class LoginResource {
 	
 	@GET
 	public Viewable getLogin(
-		@Auth Subject subject
+		@Context Subject subject
 	) {
 		if (subject.isAuthenticated()) {
 //		if (false) {

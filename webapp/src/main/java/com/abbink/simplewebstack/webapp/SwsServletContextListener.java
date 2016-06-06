@@ -21,7 +21,7 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
-import com.abbink.simplewebstack.common.auth.RandomStringGenerator;
+import com.abbink.simplewebstack.common.auth.utils.RandomStringGenerator;
 import com.abbink.simplewebstack.common.data.migration.FlywayMigrator;
 import com.abbink.simplewebstack.webapp.di.SwsModule;
 import com.codahale.metrics.JmxReporter;

@@ -7,17 +7,20 @@ import javax.inject.Singleton;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import lombok.extern.java.Log;
 
+import org.apache.shiro.subject.Subject;
+
 import com.abbink.simplewebstack.common.aop.Auth;
-import com.abbink.simplewebstack.common.auth.mechanisms.AnonymousAuthenticationMechanism;
+import com.abbink.simplewebstack.common.auth.mechanisms.BearerTokenAuthenticationMechanism;
 
 @Singleton
 @Produces(MediaType.APPLICATION_JSON)
 @Path(BASE_PATH + "sandwich/stats")
-@Auth(AnonymousAuthenticationMechanism.class)
+@Auth(BearerTokenAuthenticationMechanism.class)
 @Log
 public class SandwichStatsResource {
 	private final SandwichStats sandwichStats;
@@ -28,13 +31,7 @@ public class SandwichStatsResource {
 	}
 	
 	@GET
-	public SandwichStats.StatsSnapshot getStats() {
-		doWhatever();
+	public SandwichStats.StatsSnapshot getStats(@Context Subject sub) {
 		return sandwichStats.getStats();
-	}
-	
-	//@Auth
-	protected void doWhatever() {
-		
 	}
 }
