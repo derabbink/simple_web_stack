@@ -1,0 +1,11 @@
+
+dependencies {
+	compile project(':common')
+	
+	compile 'com.h2database:h2:1.4.187'
+	compile 'org.flywaydb:flyway-core:3.2.1'
+	compile 'org.jooq:jooq:3.6.2'
+	compile 'org.jooq:jooq-codegen:3.6.2'
+	
+	compile 'org.slf4j:slf4j-simple:1.7.12'
+}

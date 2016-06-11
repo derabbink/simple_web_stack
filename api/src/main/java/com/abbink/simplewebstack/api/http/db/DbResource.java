@@ -34,13 +34,13 @@ public class DbResource {
 	public Something getStats() {
 		try (Connection conn = ds.getConnection()) {
 			DSLContext create = DSL.using(conn, SQLDialect.H2);
-			SomethingDao dao = new SomethingDao(create.configuration());
-			Something res = dao.fetchOneById(2);
+//			SomethingDao dao = new SomethingDao(create.configuration());
+//			Something res = dao.fetchOneById(2);
 			Something result = create.selectFrom(SOMETHING)
 				.where(SOMETHING.ID.eq(1))
 				.fetchAny()
 				.into(Something.class);
-			return res;
+			return result;
 		} catch (SQLException e) {
 			throw new NotFoundException(e.getMessage());
 		}

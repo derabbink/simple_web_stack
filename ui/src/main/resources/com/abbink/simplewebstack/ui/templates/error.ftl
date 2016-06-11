@@ -3,6 +3,9 @@
 	<title>Not Found</title>
 </head>
 <body>
-	<h1>Error Code ${code}: ${message}</h1>
+	<h1>
+		Error<#if code??> Code ${code}</#if>
+		<#if message??>: ${message}</#if>
+	</h1>
 </body>
 </html>

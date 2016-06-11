@@ -1,2 +1,8 @@
 
-include 'common', 'api', 'ui', 'webapp'
+include(
+	'api',
+	'codegen',
+	'common',
+	'ui',
+	'webapp'
+)
