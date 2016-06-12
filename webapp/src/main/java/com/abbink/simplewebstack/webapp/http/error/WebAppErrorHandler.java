@@ -16,7 +16,7 @@ import javax.ws.rs.ext.Provider;
 
 import com.abbink.simplewebstack.api.utils.Constants;
 import com.abbink.simplewebstack.common.errors.WebAppError;
-import com.abbink.simplewebstack.common.jersey.ext.SlaveExceptionMapper;
+import com.abbink.simplewebstack.common.errors.jersey.SlaveExceptionMapper;
 
 @Singleton
 @Provider

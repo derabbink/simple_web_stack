@@ -7,6 +7,7 @@ import com.abbink.simplewebstack.common.auth.mechanisms.RejectAuthenticationMech
 import com.abbink.simplewebstack.common.auth.shiro.di.AuthShiroModule;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
+import com.google.inject.assistedinject.FactoryProvider;
 import com.google.inject.multibindings.MapBinder;
 
 public class AuthenticationMechanismModule extends AbstractModule {
@@ -16,14 +17,18 @@ public class AuthenticationMechanismModule extends AbstractModule {
 		install(new AuthShiroModule());
 		
 		// bind authentication mechanisms
-		MapBinder<Class<? extends AuthenticationMechanism>, AuthenticationMechanism> mapBinder = MapBinder.newMapBinder(
+		MapBinder<Class<? extends AuthenticationMechanism>, AuthenticationMechanism.Factory> mapBinder = MapBinder.newMapBinder(
 			binder(),
 			new TypeLiteral<Class<? extends AuthenticationMechanism>>() {},
-			new TypeLiteral<AuthenticationMechanism>() {}
+			new TypeLiteral<AuthenticationMechanism.Factory>() {}
 		);
-		mapBinder.addBinding(AnonymousAuthenticationMechanism.class).to(AnonymousAuthenticationMechanism.class);
-		mapBinder.addBinding(RejectAuthenticationMechanism.class).to(RejectAuthenticationMechanism.class);
-		mapBinder.addBinding(BearerTokenAuthenticationMechanism.class).to(BearerTokenAuthenticationMechanism.class);
+		// There is no assisted inject available for multibindings yet, so we keep using the deprecated FactoryProvider
+		mapBinder.addBinding(AnonymousAuthenticationMechanism.class).toProvider(FactoryProvider.newFactory(
+			AuthenticationMechanism.Factory.class, AnonymousAuthenticationMechanism.class));
+		mapBinder.addBinding(RejectAuthenticationMechanism.class).toProvider(FactoryProvider.newFactory(
+			AuthenticationMechanism.Factory.class, RejectAuthenticationMechanism.class));
+		mapBinder.addBinding(BearerTokenAuthenticationMechanism.class).toProvider(FactoryProvider.newFactory(
+			AuthenticationMechanism.Factory.class, BearerTokenAuthenticationMechanism.class));
 	}
 
 }

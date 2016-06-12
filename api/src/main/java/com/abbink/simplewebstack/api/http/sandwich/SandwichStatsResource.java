@@ -14,7 +14,7 @@ import lombok.extern.java.Log;
 
 import org.apache.shiro.subject.Subject;
 
-import com.abbink.simplewebstack.common.aop.Auth;
+import com.abbink.simplewebstack.common.auth.aop.Auth;
 import com.abbink.simplewebstack.common.auth.mechanisms.BearerTokenAuthenticationMechanism;
 
 @Singleton

@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 
 import lombok.extern.java.Log;
 
-import com.abbink.simplewebstack.common.aop.Auth;
+import com.abbink.simplewebstack.common.auth.aop.Auth;
 import com.abbink.simplewebstack.common.auth.mechanisms.AuthenticationMechanism;
 import com.google.common.collect.Lists;
 import com.google.inject.Singleton;
@@ -21,11 +23,13 @@ import com.sun.jersey.spi.container.ResourceFilterFactory;
 @Log
 public class AuthResourceFilterFactory implements ResourceFilterFactory {
 
-	private Map<Class<? extends AuthenticationMechanism>, AuthenticationMechanism> authenticationMechanisms;
+	private Map<Class<? extends AuthenticationMechanism>, AuthenticationMechanism.Factory> authenticationMechanismFactories;
+	
+	@Context private HttpServletRequest servletRequestProxy;
 	
 	@Inject
-	public AuthResourceFilterFactory(Map<Class<? extends AuthenticationMechanism>, AuthenticationMechanism> authenticationMechanisms) {
-		this.authenticationMechanisms = authenticationMechanisms;
+	public AuthResourceFilterFactory(Map<Class<? extends AuthenticationMechanism>, AuthenticationMechanism.Factory> authenticationMechanismFactories) {
+		this.authenticationMechanismFactories = authenticationMechanismFactories;
 	}
 	
 	@Override
@@ -42,9 +46,9 @@ public class AuthResourceFilterFactory implements ResourceFilterFactory {
 			}
 			if (annotation != null) {
 				Class<? extends AuthenticationMechanism> m = annotation.value();
-				AuthenticationMechanism mechanism = authenticationMechanisms.get(m);
-				if (mechanism != null) {
-					return Lists.<ResourceFilter>newArrayList(mechanism);
+				AuthenticationMechanism.Factory mechanismFactory = authenticationMechanismFactories.get(m);
+				if (mechanismFactory != null) {
+					return Lists.<ResourceFilter>newArrayList(mechanismFactory.create(servletRequestProxy));
 				}
 				log.severe("Could not find AuthenticationMechanism "+ m.getName() +" for "+ am.getClass().getName() + ": " + am);
 			}

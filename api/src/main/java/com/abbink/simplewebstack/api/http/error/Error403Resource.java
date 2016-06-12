@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import com.abbink.simplewebstack.common.aop.Auth;
+import com.abbink.simplewebstack.common.auth.aop.Auth;
 import com.abbink.simplewebstack.common.auth.mechanisms.BearerTokenAuthenticationMechanism;
 import com.abbink.simplewebstack.common.errors.ForbiddenException;
 

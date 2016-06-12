@@ -6,6 +6,7 @@ import static javax.ws.rs.HttpMethod.HEAD;
 import static javax.ws.rs.HttpMethod.POST;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.subject.Subject;
@@ -14,6 +15,7 @@ import org.apache.shiro.web.subject.support.DefaultWebSubjectContext;
 import com.abbink.simplewebstack.common.auth.shiro.BearerTokenAuthenticationToken;
 import com.abbink.simplewebstack.common.auth.shiro.BearerTokenSecurityManager;
 import com.abbink.simplewebstack.common.errors.UnauthorizedException;
+import com.google.inject.assistedinject.Assisted;
 import com.sun.jersey.spi.container.ContainerRequest;
 
 public class BearerTokenAuthenticationMechanism extends AuthenticationMechanism {
@@ -21,10 +23,12 @@ public class BearerTokenAuthenticationMechanism extends AuthenticationMechanism 
 	public static final String TOKEN_NAME = "access_token";
 	
 	private BearerTokenSecurityManager securityManager;
+	private HttpServletRequest servletRequest;
 	
 	@Inject
-	public BearerTokenAuthenticationMechanism(BearerTokenSecurityManager securityManager) {
+	private BearerTokenAuthenticationMechanism(BearerTokenSecurityManager securityManager, @Assisted  HttpServletRequest servletRequest) {
 		this.securityManager = securityManager;
+		this.servletRequest = servletRequest;
 	}
 	
 	@Override

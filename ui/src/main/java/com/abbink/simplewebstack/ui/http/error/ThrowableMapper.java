@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.abbink.simplewebstack.common.jersey.ext.SlaveExceptionMapper;
+import com.abbink.simplewebstack.common.errors.jersey.SlaveExceptionMapper;
 import com.sun.jersey.api.view.Viewable;
 
 public class ThrowableMapper implements SlaveExceptionMapper<Throwable> {

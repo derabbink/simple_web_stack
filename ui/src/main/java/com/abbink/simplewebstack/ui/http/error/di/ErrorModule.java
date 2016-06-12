@@ -3,7 +3,7 @@ package com.abbink.simplewebstack.ui.http.error.di;
 import static com.abbink.simplewebstack.ui.utils.Constants.BASE_PATH_SEGMENT;
 
 import com.abbink.simplewebstack.common.errors.WebAppError;
-import com.abbink.simplewebstack.common.jersey.ext.SlaveExceptionMapper;
+import com.abbink.simplewebstack.common.errors.jersey.SlaveExceptionMapper;
 import com.abbink.simplewebstack.ui.http.error.NotFoundExceptionMapper;
 import com.abbink.simplewebstack.ui.http.error.ThrowableMapper;
 import com.abbink.simplewebstack.ui.http.error.WebAppErrorMapper;

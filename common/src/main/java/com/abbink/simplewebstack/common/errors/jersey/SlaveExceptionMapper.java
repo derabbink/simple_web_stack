@@ -1,4 +1,4 @@
-package com.abbink.simplewebstack.common.jersey.ext;
+package com.abbink.simplewebstack.common.errors.jersey;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;

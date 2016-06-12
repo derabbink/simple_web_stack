@@ -5,7 +5,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.abbink.simplewebstack.common.jersey.ext.SlaveExceptionMapper;
+import com.abbink.simplewebstack.common.errors.jersey.SlaveExceptionMapper;
 import com.sun.jersey.api.NotFoundException;
 
 public class NotFoundExceptionMapper implements SlaveExceptionMapper<NotFoundException>{

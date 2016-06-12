@@ -7,7 +7,7 @@ import com.abbink.simplewebstack.api.http.error.NotFoundExceptionMapper;
 import com.abbink.simplewebstack.api.http.error.ThrowableMapper;
 import com.abbink.simplewebstack.api.http.error.WebAppErrorMapper;
 import com.abbink.simplewebstack.common.errors.WebAppError;
-import com.abbink.simplewebstack.common.jersey.ext.SlaveExceptionMapper;
+import com.abbink.simplewebstack.common.errors.jersey.SlaveExceptionMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;

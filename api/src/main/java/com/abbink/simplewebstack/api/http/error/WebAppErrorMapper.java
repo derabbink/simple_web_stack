@@ -6,7 +6,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.abbink.simplewebstack.common.errors.WebAppError;
-import com.abbink.simplewebstack.common.jersey.ext.SlaveExceptionMapper;
+import com.abbink.simplewebstack.common.errors.jersey.SlaveExceptionMapper;
 
 public class WebAppErrorMapper implements SlaveExceptionMapper<WebAppError> {
 
