@@ -8,7 +8,9 @@ import com.abbink.simplewebstack.common.data.generated.tables.AccessTokens;
 import com.abbink.simplewebstack.common.data.generated.tables.AppScopedIds;
 import com.abbink.simplewebstack.common.data.generated.tables.Apps;
 import com.abbink.simplewebstack.common.data.generated.tables.ExternalIds;
+import com.abbink.simplewebstack.common.data.generated.tables.RememberMeTokens;
 import com.abbink.simplewebstack.common.data.generated.tables.SchemaVersion;
+import com.abbink.simplewebstack.common.data.generated.tables.Sessions;
 import com.abbink.simplewebstack.common.data.generated.tables.Something;
 import com.abbink.simplewebstack.common.data.generated.tables.Users;
 
@@ -57,6 +59,16 @@ public class Tables {
 	 * The table PUBLIC.ACCESS_TOKENS
 	 */
 	public static final AccessTokens ACCESS_TOKENS = com.abbink.simplewebstack.common.data.generated.tables.AccessTokens.ACCESS_TOKENS;
+
+	/**
+	 * The table PUBLIC.SESSIONS
+	 */
+	public static final Sessions SESSIONS = com.abbink.simplewebstack.common.data.generated.tables.Sessions.SESSIONS;
+
+	/**
+	 * The table PUBLIC.REMEMBER_ME_TOKENS
+	 */
+	public static final RememberMeTokens REMEMBER_ME_TOKENS = com.abbink.simplewebstack.common.data.generated.tables.RememberMeTokens.REMEMBER_ME_TOKENS;
 
 	/**
 	 * The table PUBLIC.SOMETHING

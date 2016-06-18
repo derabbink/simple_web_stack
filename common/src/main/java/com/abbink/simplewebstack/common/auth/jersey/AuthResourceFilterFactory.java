@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
 
 import lombok.extern.java.Log;
@@ -26,6 +27,7 @@ public class AuthResourceFilterFactory implements ResourceFilterFactory {
 	private Map<Class<? extends AuthenticationMechanism>, AuthenticationMechanism.Factory> authenticationMechanismFactories;
 	
 	@Context private HttpServletRequest servletRequestProxy;
+	@Context private HttpServletResponse servletResponseProxy;
 	
 	@Inject
 	public AuthResourceFilterFactory(Map<Class<? extends AuthenticationMechanism>, AuthenticationMechanism.Factory> authenticationMechanismFactories) {
@@ -48,7 +50,7 @@ public class AuthResourceFilterFactory implements ResourceFilterFactory {
 				Class<? extends AuthenticationMechanism> m = annotation.value();
 				AuthenticationMechanism.Factory mechanismFactory = authenticationMechanismFactories.get(m);
 				if (mechanismFactory != null) {
-					return Lists.<ResourceFilter>newArrayList(mechanismFactory.create(servletRequestProxy));
+					return Lists.<ResourceFilter>newArrayList(mechanismFactory.create(servletRequestProxy, servletResponseProxy));
 				}
 				log.severe("Could not find AuthenticationMechanism "+ m.getName() +" for "+ am.getClass().getName() + ": " + am);
 			}

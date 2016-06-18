@@ -7,6 +7,7 @@ import static javax.ws.rs.HttpMethod.POST;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.subject.Subject;
@@ -24,11 +25,17 @@ public class BearerTokenAuthenticationMechanism extends AuthenticationMechanism 
 	
 	private BearerTokenSecurityManager securityManager;
 	private HttpServletRequest servletRequest;
+	private HttpServletResponse servletResponse;
 	
 	@Inject
-	private BearerTokenAuthenticationMechanism(BearerTokenSecurityManager securityManager, @Assisted  HttpServletRequest servletRequest) {
+	private BearerTokenAuthenticationMechanism(
+		BearerTokenSecurityManager securityManager,
+		@Assisted  HttpServletRequest servletRequest,
+		@Assisted  HttpServletResponse servletResponse
+	) {
 		this.securityManager = securityManager;
 		this.servletRequest = servletRequest;
+		this.servletResponse = servletResponse;
 	}
 	
 	@Override
@@ -45,6 +52,8 @@ public class BearerTokenAuthenticationMechanism extends AuthenticationMechanism 
 		}
 		
 		DefaultWebSubjectContext context = new DefaultWebSubjectContext();
+		context.setServletRequest(servletRequest);
+		context.setServletResponse(servletResponse);
 		Subject subject = securityManager.createSubject(context);
 		try {
 			subject.login(new BearerTokenAuthenticationToken(token));

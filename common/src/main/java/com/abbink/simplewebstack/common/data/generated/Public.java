@@ -9,7 +9,9 @@ import com.abbink.simplewebstack.common.data.generated.tables.AccessTokens;
 import com.abbink.simplewebstack.common.data.generated.tables.AppScopedIds;
 import com.abbink.simplewebstack.common.data.generated.tables.Apps;
 import com.abbink.simplewebstack.common.data.generated.tables.ExternalIds;
+import com.abbink.simplewebstack.common.data.generated.tables.RememberMeTokens;
 import com.abbink.simplewebstack.common.data.generated.tables.SchemaVersion;
+import com.abbink.simplewebstack.common.data.generated.tables.Sessions;
 import com.abbink.simplewebstack.common.data.generated.tables.Something;
 import com.abbink.simplewebstack.common.data.generated.tables.Users;
 
@@ -37,7 +39,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = 995835329;
+	private static final long serialVersionUID = -896151455;
 
 	/**
 	 * The reference instance of <code>PUBLIC</code>
@@ -60,10 +62,10 @@ public class Public extends SchemaImpl {
 
 	private final List<Sequence<?>> getSequences0() {
 		return Arrays.<Sequence<?>>asList(
-			Sequences.SYSTEM_SEQUENCE_A674379B_6B84_4F5B_B7AD_3B27FCE70480,
-			Sequences.SYSTEM_SEQUENCE_B5BB486F_C46A_41DB_ADF2_6ADDEF534060,
-			Sequences.SYSTEM_SEQUENCE_CE3F30E2_D169_43B6_A70F_6DD4D9840FFF,
-			Sequences.SYSTEM_SEQUENCE_FCFF2B2F_ABE8_4BBE_A021_E8D3401ED37A);
+			Sequences.SYSTEM_SEQUENCE_1BB84E15_90BE_4120_BA7C_88250F9AF96D,
+			Sequences.SYSTEM_SEQUENCE_54B39E29_0CD5_41C4_8A31_4CEA95D2285D,
+			Sequences.SYSTEM_SEQUENCE_620B5EEE_471D_450E_B273_10CECA9E5E65,
+			Sequences.SYSTEM_SEQUENCE_6C48DA8C_D3F7_4C97_942E_3FB437D6BE00);
 	}
 
 	@Override
@@ -81,6 +83,8 @@ public class Public extends SchemaImpl {
 			Apps.APPS,
 			AppScopedIds.APP_SCOPED_IDS,
 			AccessTokens.ACCESS_TOKENS,
+			Sessions.SESSIONS,
+			RememberMeTokens.REMEMBER_ME_TOKENS,
 			Something.SOMETHING);
 	}
 }
