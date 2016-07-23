@@ -66,20 +66,6 @@ public class AccessTokensDao extends DAOImpl<AccessTokensRecord, com.abbink.simp
 	}
 
 	/**
-	 * Fetch records that have <code>USER_ID IN (values)</code>
-	 */
-	public List<com.abbink.simplewebstack.common.data.generated.tables.pojos.AccessTokens> fetchByUserId(Integer... values) {
-		return fetch(AccessTokens.ACCESS_TOKENS.USER_ID, values);
-	}
-
-	/**
-	 * Fetch records that have <code>APP_ID IN (values)</code>
-	 */
-	public List<com.abbink.simplewebstack.common.data.generated.tables.pojos.AccessTokens> fetchByAppId(Integer... values) {
-		return fetch(AccessTokens.ACCESS_TOKENS.APP_ID, values);
-	}
-
-	/**
 	 * Fetch records that have <code>TOKEN_SCOPED_USER_XID IN (values)</code>
 	 */
 	public List<com.abbink.simplewebstack.common.data.generated.tables.pojos.AccessTokens> fetchByTokenScopedUserXid(String... values) {
@@ -98,6 +84,13 @@ public class AccessTokensDao extends DAOImpl<AccessTokensRecord, com.abbink.simp
 	 */
 	public List<com.abbink.simplewebstack.common.data.generated.tables.pojos.AccessTokens> fetchByToken(String... values) {
 		return fetch(AccessTokens.ACCESS_TOKENS.TOKEN, values);
+	}
+
+	/**
+	 * Fetch records that have <code>APP_SCOPED_USER_XID IN (values)</code>
+	 */
+	public List<com.abbink.simplewebstack.common.data.generated.tables.pojos.AccessTokens> fetchByAppScopedUserXid(String... values) {
+		return fetch(AccessTokens.ACCESS_TOKENS.APP_SCOPED_USER_XID, values);
 	}
 
 	/**

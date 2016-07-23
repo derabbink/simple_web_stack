@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AccessTokens extends TableImpl<AccessTokensRecord> {
 
-	private static final long serialVersionUID = -1502361054;
+	private static final long serialVersionUID = 49386316;
 
 	/**
 	 * The reference instance of <code>PUBLIC.ACCESS_TOKENS</code>
@@ -56,16 +56,6 @@ public class AccessTokens extends TableImpl<AccessTokensRecord> {
 	public final TableField<AccessTokensRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>PUBLIC.ACCESS_TOKENS.USER_ID</code>.
-	 */
-	public final TableField<AccessTokensRecord, Integer> USER_ID = createField("USER_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
-	 * The column <code>PUBLIC.ACCESS_TOKENS.APP_ID</code>.
-	 */
-	public final TableField<AccessTokensRecord, Integer> APP_ID = createField("APP_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
 	 * The column <code>PUBLIC.ACCESS_TOKENS.TOKEN_SCOPED_USER_XID</code>.
 	 */
 	public final TableField<AccessTokensRecord, String> TOKEN_SCOPED_USER_XID = createField("TOKEN_SCOPED_USER_XID", org.jooq.impl.SQLDataType.CHAR.length(10).nullable(false), this, "");
@@ -79,6 +69,11 @@ public class AccessTokens extends TableImpl<AccessTokensRecord> {
 	 * The column <code>PUBLIC.ACCESS_TOKENS.TOKEN</code>.
 	 */
 	public final TableField<AccessTokensRecord, String> TOKEN = createField("TOKEN", org.jooq.impl.SQLDataType.CHAR.length(88).nullable(false), this, "");
+
+	/**
+	 * The column <code>PUBLIC.ACCESS_TOKENS.APP_SCOPED_USER_XID</code>.
+	 */
+	public final TableField<AccessTokensRecord, String> APP_SCOPED_USER_XID = createField("APP_SCOPED_USER_XID", org.jooq.impl.SQLDataType.CHAR.length(10).nullable(false), this, "");
 
 	/**
 	 * The column <code>PUBLIC.ACCESS_TOKENS.EXPIRES_AT</code>.

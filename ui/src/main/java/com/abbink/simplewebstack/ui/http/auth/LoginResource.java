@@ -5,7 +5,9 @@ import static com.abbink.simplewebstack.ui.utils.Constants.BASE_PATH;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,25 +15,37 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
+
+import lombok.extern.java.Log;
 
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 
+import com.abbink.simplewebstack.common.auth.aop.Auth;
+import com.abbink.simplewebstack.common.auth.mechanisms.AnonymousAuthenticationMechanism2;
+import com.abbink.simplewebstack.common.auth.service.WebLoginService2;
+import com.abbink.simplewebstack.common.http.Redirect;
 import com.sun.jersey.api.view.Viewable;
 
-// TODO change to custom path, once FormAuthenticationFilter setters are injected
+@Log
 @Path(BASE_PATH + "login")
+@Auth(AnonymousAuthenticationMechanism2.class)
 @Produces(MediaType.TEXT_HTML)
 public class LoginResource {
+	private WebLoginService2 loginService;
+	
+	@Inject
+	public LoginResource(WebLoginService2 loginService) {
+		this.loginService = loginService;
+	}
 	
 	@GET
-	public Viewable getLogin(
-		@Context Subject subject
+	public Viewable get(
+		@Context Subject subject,
+		@Context UriInfo uriInfo
 	) {
-		if (subject.isAuthenticated()) {
-//		if (false) {
-			// TODO redirect to account settings instead
-			return new Viewable("/auth/logged_in");
+		if (subject.isAuthenticated() || subject.isRemembered()) {
+			throw new Redirect(uriInfo.getBaseUriBuilder().path(AboutMeResource.class).build());
 		}
 		
 		Map<String, Object> model = new HashMap<String, Object>();
@@ -41,33 +55,20 @@ public class LoginResource {
 	}
 	
 	@POST
-	public Viewable postLogin(
+	public Viewable post(
+		@Context UriInfo uriInfo,
 		@Context HttpServletRequest request,
-		// TODO use Guice-bound param name
+		@Context HttpServletResponse response,
 		@FormParam("username") String username,
-		// TODO use Guice-bound param name
 		@FormParam("password") String password
 	) {
-		// TODO change attribute key
-		Object attrib = request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
-		if (attrib != null && attrib instanceof String) {
-			forceLogout();
+		if (!loginService.executeLogin(username, password, request, response)) {
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("showFailure", true);
 			model.put("username", username);
 			return new Viewable("/auth/login_form", model);
 		}
 		
-		// TODO implement redirect to index for logged in users
-		// this should never happen, as the FormAuthenticationFilter redirects before getting here
-		return new Viewable("/auth/logged_in");
+		throw new Redirect(uriInfo.getBaseUriBuilder().path(AboutMeResource.class).build());
 	}
-	
-	/**
-	 * Silently force-terminates the current session, should it exist.
-	 */
-	private void forceLogout() {
-		// TODO
-	}
-	
 }

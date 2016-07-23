@@ -23,43 +23,39 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AccessTokens implements Serializable {
 
-	private static final long serialVersionUID = -1362116701;
+	private static final long serialVersionUID = 1259086800;
 
 	private Integer   id;
-	private Integer   userId;
-	private Integer   appId;
 	private String    tokenScopedUserXid;
 	private String    salt;
 	private String    token;
+	private String    appScopedUserXid;
 	private Timestamp expiresAt;
 
 	public AccessTokens() {}
 
 	public AccessTokens(AccessTokens value) {
 		this.id = value.id;
-		this.userId = value.userId;
-		this.appId = value.appId;
 		this.tokenScopedUserXid = value.tokenScopedUserXid;
 		this.salt = value.salt;
 		this.token = value.token;
+		this.appScopedUserXid = value.appScopedUserXid;
 		this.expiresAt = value.expiresAt;
 	}
 
 	public AccessTokens(
 		Integer   id,
-		Integer   userId,
-		Integer   appId,
 		String    tokenScopedUserXid,
 		String    salt,
 		String    token,
+		String    appScopedUserXid,
 		Timestamp expiresAt
 	) {
 		this.id = id;
-		this.userId = userId;
-		this.appId = appId;
 		this.tokenScopedUserXid = tokenScopedUserXid;
 		this.salt = salt;
 		this.token = token;
+		this.appScopedUserXid = appScopedUserXid;
 		this.expiresAt = expiresAt;
 	}
 
@@ -69,22 +65,6 @@ public class AccessTokens implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getUserId() {
-		return this.userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public Integer getAppId() {
-		return this.appId;
-	}
-
-	public void setAppId(Integer appId) {
-		this.appId = appId;
 	}
 
 	public String getTokenScopedUserXid() {
@@ -111,6 +91,14 @@ public class AccessTokens implements Serializable {
 		this.token = token;
 	}
 
+	public String getAppScopedUserXid() {
+		return this.appScopedUserXid;
+	}
+
+	public void setAppScopedUserXid(String appScopedUserXid) {
+		this.appScopedUserXid = appScopedUserXid;
+	}
+
 	public Timestamp getExpiresAt() {
 		return this.expiresAt;
 	}
@@ -134,18 +122,6 @@ public class AccessTokens implements Serializable {
 		}
 		else if (!id.equals(other.id))
 			return false;
-		if (userId == null) {
-			if (other.userId != null)
-				return false;
-		}
-		else if (!userId.equals(other.userId))
-			return false;
-		if (appId == null) {
-			if (other.appId != null)
-				return false;
-		}
-		else if (!appId.equals(other.appId))
-			return false;
 		if (tokenScopedUserXid == null) {
 			if (other.tokenScopedUserXid != null)
 				return false;
@@ -164,6 +140,12 @@ public class AccessTokens implements Serializable {
 		}
 		else if (!token.equals(other.token))
 			return false;
+		if (appScopedUserXid == null) {
+			if (other.appScopedUserXid != null)
+				return false;
+		}
+		else if (!appScopedUserXid.equals(other.appScopedUserXid))
+			return false;
 		if (expiresAt == null) {
 			if (other.expiresAt != null)
 				return false;
@@ -178,11 +160,10 @@ public class AccessTokens implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
-		result = prime * result + ((appId == null) ? 0 : appId.hashCode());
 		result = prime * result + ((tokenScopedUserXid == null) ? 0 : tokenScopedUserXid.hashCode());
 		result = prime * result + ((salt == null) ? 0 : salt.hashCode());
 		result = prime * result + ((token == null) ? 0 : token.hashCode());
+		result = prime * result + ((appScopedUserXid == null) ? 0 : appScopedUserXid.hashCode());
 		result = prime * result + ((expiresAt == null) ? 0 : expiresAt.hashCode());
 		return result;
 	}

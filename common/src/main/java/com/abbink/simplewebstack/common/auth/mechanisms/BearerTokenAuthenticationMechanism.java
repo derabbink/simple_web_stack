@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.subject.WebSubjectContext;
 import org.apache.shiro.web.subject.support.DefaultWebSubjectContext;
 
-import com.abbink.simplewebstack.common.auth.shiro.BearerTokenAuthenticationToken;
 import com.abbink.simplewebstack.common.auth.shiro.BearerTokenSecurityManager;
-import com.abbink.simplewebstack.common.errors.UnauthorizedException;
+import com.abbink.simplewebstack.common.auth.shiro.authtokens.BearerTokenAuthenticationToken;
+import com.abbink.simplewebstack.common.error.UnauthorizedException;
 import com.google.inject.assistedinject.Assisted;
 import com.sun.jersey.spi.container.ContainerRequest;
 
@@ -51,7 +52,7 @@ public class BearerTokenAuthenticationMechanism extends AuthenticationMechanism 
 			token = request.getFormParameters().getFirst(TOKEN_NAME);
 		}
 		
-		DefaultWebSubjectContext context = new DefaultWebSubjectContext();
+		WebSubjectContext context = new DefaultWebSubjectContext();
 		context.setServletRequest(servletRequest);
 		context.setServletResponse(servletResponse);
 		Subject subject = securityManager.createSubject(context);

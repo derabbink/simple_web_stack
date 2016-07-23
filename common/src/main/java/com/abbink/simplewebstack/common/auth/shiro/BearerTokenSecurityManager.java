@@ -20,6 +20,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.SubjectContext;
 import org.apache.shiro.web.mgt.DefaultWebSubjectFactory;
+import org.apache.shiro.web.subject.WebSubjectContext;
 import org.apache.shiro.web.subject.support.DefaultWebSubjectContext;
 
 public class BearerTokenSecurityManager implements SecurityManager {
@@ -212,7 +213,7 @@ public class BearerTokenSecurityManager implements SecurityManager {
 	
 	// inspired by DefaultSecurityManager
 	protected Subject createSubject(AuthenticationToken token, AuthenticationInfo info, Subject existing) {
-		SubjectContext context = new DefaultWebSubjectContext();
+		WebSubjectContext context = new DefaultWebSubjectContext();
 		context.setAuthenticated(true);
 		context.setAuthenticationToken(token);
 		context.setAuthenticationInfo(info);

@@ -4,6 +4,7 @@ import static com.abbink.simplewebstack.common.data.generated.Tables.ACCESS_TOKE
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.Instant;
 
 import javax.inject.Inject;
 
@@ -11,6 +12,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExpiredCredentialsException;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.codec.CodecSupport;
@@ -22,6 +24,8 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
+import com.abbink.simplewebstack.common.auth.shiro.authtokens.BearerTokenAuthenticationToken;
+import com.abbink.simplewebstack.common.auth.shiro.principals.AppScopedExternalID;
 import com.abbink.simplewebstack.common.data.generated.tables.pojos.AccessTokens;
 
 public class BearerTokenRealm extends AuthenticatingRealm {
@@ -42,21 +46,10 @@ public class BearerTokenRealm extends AuthenticatingRealm {
 	}
 	
 	public AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		BearerTokenAuthenticationToken bearerToken = (BearerTokenAuthenticationToken)token;
-		BearerTokenAuthenticationInfo user = getUser((String) bearerToken.getPrincipal());
-		
-		if (
-			user == null ||
-			(user != null && user.isCredentialsExpired())
-		) {
-			throw new ExpiredCredentialsException("No valid access token provided.");
-		}
-		
-		return user;
-	}
-	
-	private BearerTokenAuthenticationInfo getUser(String tokenSpecificPrincipal) {
-		if (tokenSpecificPrincipal == null) {
+		BearerTokenAuthenticationToken bearerToken = null;
+		if (token instanceof BearerTokenAuthenticationToken) {
+			bearerToken = (BearerTokenAuthenticationToken)token;
+		} else {
 			return null;
 		}
 		
@@ -64,22 +57,24 @@ public class BearerTokenRealm extends AuthenticatingRealm {
 			DSLContext dsl = DSL.using(conn, dialect);
 			AccessTokens at = dsl.select()
 				.from(ACCESS_TOKENS)
-				.where(ACCESS_TOKENS.TOKEN_SCOPED_USER_XID.eq(tokenSpecificPrincipal))
+				.where(ACCESS_TOKENS.TOKEN_SCOPED_USER_XID.eq((String) bearerToken.getPrincipal()))
 				.fetchAnyInto(AccessTokens.class);
 			if (at == null) {
 				return null;
+			}
+			
+			if (at.getExpiresAt().toInstant().isBefore(Instant.now())) {
+				throw new ExpiredCredentialsException("No valid access token provided.");
 			}
 			
 			byte[] storedSalt = CodecSupport.toBytes(at.getSalt());
 			storedSalt = Base64.decode(storedSalt);
 			ByteSource salt = ByteSource.Util.bytes(storedSalt);
 			
-			return new BearerTokenAuthenticationInfo(
-				at.getUserId(),
-				at.getTokenScopedUserXid(),
+			return new SimpleAuthenticationInfo(
+				new AppScopedExternalID(at.getAppScopedUserXid()),
 				at.getToken(),
 				salt,
-				at.getExpiresAt() == null ? null : at.getExpiresAt().toInstant(),
 				getName()
 			);
 		} catch (SQLException e) {

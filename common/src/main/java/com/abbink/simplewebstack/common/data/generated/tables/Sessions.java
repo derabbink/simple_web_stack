@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sessions extends TableImpl<SessionsRecord> {
 
-	private static final long serialVersionUID = 1022492886;
+	private static final long serialVersionUID = 516030610;
 
 	/**
 	 * The reference instance of <code>PUBLIC.SESSIONS</code>
@@ -63,6 +63,11 @@ public class Sessions extends TableImpl<SessionsRecord> {
 	 * The column <code>PUBLIC.SESSIONS.SALT</code>.
 	 */
 	public final TableField<SessionsRecord, String> SALT = createField("SALT", org.jooq.impl.SQLDataType.CHAR.length(24).nullable(false), this, "");
+
+	/**
+	 * The column <code>PUBLIC.SESSIONS.USER_XID</code>.
+	 */
+	public final TableField<SessionsRecord, String> USER_XID = createField("USER_XID", org.jooq.impl.SQLDataType.CHAR.length(10).nullable(false), this, "");
 
 	/**
 	 * The column <code>PUBLIC.SESSIONS.EXPIRES_AT</code>.

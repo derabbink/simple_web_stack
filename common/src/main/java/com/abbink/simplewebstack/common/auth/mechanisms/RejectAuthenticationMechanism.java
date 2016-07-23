@@ -12,8 +12,14 @@ public class RejectAuthenticationMechanism extends AuthenticationMechanism {
 	
 	@Override
 	public ContainerRequest filter(ContainerRequest request) {
+		return doFilter(request);
+	}
+	
+	/**
+	 * Reusable logic fore composing AuthenticationMechanisms
+	 */
+	static ContainerRequest doFilter(ContainerRequest request) {
 		log.info("Rejecting authentication for " + request.getMethod());
 		throw new WebApplicationException(Response.Status.UNAUTHORIZED);
 	}
-	
 }

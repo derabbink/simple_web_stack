@@ -103,10 +103,10 @@ public class SwsServletContextListener extends GuiceServletContextListener {
 			
 			dsl = DSL.using(conn, dialect);
 			dsl.insertInto(ACCESS_TOKENS,
-				ACCESS_TOKENS.USER_ID, ACCESS_TOKENS.APP_ID, ACCESS_TOKENS.TOKEN_SCOPED_USER_XID,
+				ACCESS_TOKENS.APP_SCOPED_USER_XID, ACCESS_TOKENS.TOKEN_SCOPED_USER_XID,
 				ACCESS_TOKENS.SALT, ACCESS_TOKENS.TOKEN
-			)	.values(1, 1, a, aSaltS, aHash)
-				.values(2, 1, b, bSaltS, bHash)
+			)	.values(appScopedAlice, a, aSaltS, aHash)
+				.values(appScopedBob, b, bSaltS, bHash)
 				.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

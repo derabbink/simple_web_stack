@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RememberMeTokens extends TableImpl<RememberMeTokensRecord> {
 
-	private static final long serialVersionUID = 788200855;
+	private static final long serialVersionUID = 1122335969;
 
 	/**
 	 * The reference instance of <code>PUBLIC.REMEMBER_ME_TOKENS</code>
@@ -63,6 +63,11 @@ public class RememberMeTokens extends TableImpl<RememberMeTokensRecord> {
 	 * The column <code>PUBLIC.REMEMBER_ME_TOKENS.SALT</code>.
 	 */
 	public final TableField<RememberMeTokensRecord, String> SALT = createField("SALT", org.jooq.impl.SQLDataType.CHAR.length(24).nullable(false), this, "");
+
+	/**
+	 * The column <code>PUBLIC.REMEMBER_ME_TOKENS.USER_XID</code>.
+	 */
+	public final TableField<RememberMeTokensRecord, String> USER_XID = createField("USER_XID", org.jooq.impl.SQLDataType.CHAR.length(10).nullable(false), this, "");
 
 	/**
 	 * The column <code>PUBLIC.REMEMBER_ME_TOKENS.EXPIRES_AT</code>.

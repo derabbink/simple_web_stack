@@ -80,6 +80,13 @@ public class RememberMeTokensDao extends DAOImpl<RememberMeTokensRecord, com.abb
 	}
 
 	/**
+	 * Fetch records that have <code>USER_XID IN (values)</code>
+	 */
+	public List<com.abbink.simplewebstack.common.data.generated.tables.pojos.RememberMeTokens> fetchByUserXid(String... values) {
+		return fetch(RememberMeTokens.REMEMBER_ME_TOKENS.USER_XID, values);
+	}
+
+	/**
 	 * Fetch records that have <code>EXPIRES_AT IN (values)</code>
 	 */
 	public List<com.abbink.simplewebstack.common.data.generated.tables.pojos.RememberMeTokens> fetchByExpiresAt(Timestamp... values) {

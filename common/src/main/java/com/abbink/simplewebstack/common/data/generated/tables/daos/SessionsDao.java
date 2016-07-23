@@ -80,6 +80,13 @@ public class SessionsDao extends DAOImpl<SessionsRecord, com.abbink.simplewebsta
 	}
 
 	/**
+	 * Fetch records that have <code>USER_XID IN (values)</code>
+	 */
+	public List<com.abbink.simplewebstack.common.data.generated.tables.pojos.Sessions> fetchByUserXid(String... values) {
+		return fetch(Sessions.SESSIONS.USER_XID, values);
+	}
+
+	/**
 	 * Fetch records that have <code>EXPIRES_AT IN (values)</code>
 	 */
 	public List<com.abbink.simplewebstack.common.data.generated.tables.pojos.Sessions> fetchByExpiresAt(Timestamp... values) {

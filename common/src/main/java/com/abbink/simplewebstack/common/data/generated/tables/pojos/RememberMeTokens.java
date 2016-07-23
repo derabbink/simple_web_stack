@@ -23,11 +23,12 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RememberMeTokens implements Serializable {
 
-	private static final long serialVersionUID = 553320039;
+	private static final long serialVersionUID = -457417172;
 
 	private String    token;
 	private String    credentials;
 	private String    salt;
+	private String    userXid;
 	private Timestamp expiresAt;
 
 	public RememberMeTokens() {}
@@ -36,6 +37,7 @@ public class RememberMeTokens implements Serializable {
 		this.token = value.token;
 		this.credentials = value.credentials;
 		this.salt = value.salt;
+		this.userXid = value.userXid;
 		this.expiresAt = value.expiresAt;
 	}
 
@@ -43,11 +45,13 @@ public class RememberMeTokens implements Serializable {
 		String    token,
 		String    credentials,
 		String    salt,
+		String    userXid,
 		Timestamp expiresAt
 	) {
 		this.token = token;
 		this.credentials = credentials;
 		this.salt = salt;
+		this.userXid = userXid;
 		this.expiresAt = expiresAt;
 	}
 
@@ -73,6 +77,14 @@ public class RememberMeTokens implements Serializable {
 
 	public void setSalt(String salt) {
 		this.salt = salt;
+	}
+
+	public String getUserXid() {
+		return this.userXid;
+	}
+
+	public void setUserXid(String userXid) {
+		this.userXid = userXid;
 	}
 
 	public Timestamp getExpiresAt() {
@@ -110,6 +122,12 @@ public class RememberMeTokens implements Serializable {
 		}
 		else if (!salt.equals(other.salt))
 			return false;
+		if (userXid == null) {
+			if (other.userXid != null)
+				return false;
+		}
+		else if (!userXid.equals(other.userXid))
+			return false;
 		if (expiresAt == null) {
 			if (other.expiresAt != null)
 				return false;
@@ -126,6 +144,7 @@ public class RememberMeTokens implements Serializable {
 		result = prime * result + ((token == null) ? 0 : token.hashCode());
 		result = prime * result + ((credentials == null) ? 0 : credentials.hashCode());
 		result = prime * result + ((salt == null) ? 0 : salt.hashCode());
+		result = prime * result + ((userXid == null) ? 0 : userXid.hashCode());
 		result = prime * result + ((expiresAt == null) ? 0 : expiresAt.hashCode());
 		return result;
 	}

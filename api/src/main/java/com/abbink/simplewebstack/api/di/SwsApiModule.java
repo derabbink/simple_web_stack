@@ -1,5 +1,6 @@
 package com.abbink.simplewebstack.api.di;
 
+import com.abbink.simplewebstack.api.error.jersey.di.ExceptionMappersModule;
 import com.abbink.simplewebstack.api.http.db.di.DbModule;
 import com.abbink.simplewebstack.api.http.error.di.ErrorModule;
 import com.abbink.simplewebstack.api.http.sandwich.di.SandwichModule;
@@ -14,6 +15,9 @@ public class SwsApiModule extends AbstractModule {
 	protected void configure() {
 		// hook Jackson into Jersey as the POJO <-> JSON mapper
 		bind(JacksonJsonProvider.class).in(Scopes.SINGLETON);
+		
+		// install API-specific error mappers
+		install(new ExceptionMappersModule());
 		
 		// install resources
 		install(new SandwichModule());

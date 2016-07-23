@@ -23,11 +23,12 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sessions implements Serializable {
 
-	private static final long serialVersionUID = -414315993;
+	private static final long serialVersionUID = -1887445230;
 
 	private String    id;
 	private String    credentials;
 	private String    salt;
+	private String    userXid;
 	private Timestamp expiresAt;
 
 	public Sessions() {}
@@ -36,6 +37,7 @@ public class Sessions implements Serializable {
 		this.id = value.id;
 		this.credentials = value.credentials;
 		this.salt = value.salt;
+		this.userXid = value.userXid;
 		this.expiresAt = value.expiresAt;
 	}
 
@@ -43,11 +45,13 @@ public class Sessions implements Serializable {
 		String    id,
 		String    credentials,
 		String    salt,
+		String    userXid,
 		Timestamp expiresAt
 	) {
 		this.id = id;
 		this.credentials = credentials;
 		this.salt = salt;
+		this.userXid = userXid;
 		this.expiresAt = expiresAt;
 	}
 
@@ -73,6 +77,14 @@ public class Sessions implements Serializable {
 
 	public void setSalt(String salt) {
 		this.salt = salt;
+	}
+
+	public String getUserXid() {
+		return this.userXid;
+	}
+
+	public void setUserXid(String userXid) {
+		this.userXid = userXid;
 	}
 
 	public Timestamp getExpiresAt() {
@@ -110,6 +122,12 @@ public class Sessions implements Serializable {
 		}
 		else if (!salt.equals(other.salt))
 			return false;
+		if (userXid == null) {
+			if (other.userXid != null)
+				return false;
+		}
+		else if (!userXid.equals(other.userXid))
+			return false;
 		if (expiresAt == null) {
 			if (other.expiresAt != null)
 				return false;
@@ -126,6 +144,7 @@ public class Sessions implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((credentials == null) ? 0 : credentials.hashCode());
 		result = prime * result + ((salt == null) ? 0 : salt.hashCode());
+		result = prime * result + ((userXid == null) ? 0 : userXid.hashCode());
 		result = prime * result + ((expiresAt == null) ? 0 : expiresAt.hashCode());
 		return result;
 	}

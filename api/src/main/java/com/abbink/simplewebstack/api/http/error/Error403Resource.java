@@ -10,9 +10,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import com.abbink.simplewebstack.api.error.JsonError;
 import com.abbink.simplewebstack.common.auth.aop.Auth;
 import com.abbink.simplewebstack.common.auth.mechanisms.BearerTokenAuthenticationMechanism;
-import com.abbink.simplewebstack.common.errors.ForbiddenException;
+import com.abbink.simplewebstack.common.error.ForbiddenException;
 
 @Singleton
 @Auth(BearerTokenAuthenticationMechanism.class)
@@ -21,11 +22,11 @@ import com.abbink.simplewebstack.common.errors.ForbiddenException;
 public class Error403Resource {
 	
 	@GET
-	public ApiError getError(@Context HttpServletRequest httpRequest) {
+	public JsonError getError(@Context HttpServletRequest httpRequest) {
 		return throwException(httpRequest);
 	}
 	
-	private ApiError throwException(HttpServletRequest httpRequest) {
+	private JsonError throwException(HttpServletRequest httpRequest) {
 		throw new ForbiddenException(100, "Unsupported request.");
 	}
 }

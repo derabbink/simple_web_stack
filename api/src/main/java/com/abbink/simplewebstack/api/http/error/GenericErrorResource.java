@@ -10,17 +10,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import com.abbink.simplewebstack.api.error.JsonError;
+
 @Singleton
 @Produces(MediaType.APPLICATION_JSON)
 @Path(BASE_PATH + "error")
 public class GenericErrorResource {
 	
 	@GET
-	public ApiError getError(@Context HttpServletRequest httpRequest) {
+	public JsonError getError(@Context HttpServletRequest httpRequest) {
 		return throwException(httpRequest);
 	}
 	
-	private ApiError throwException(HttpServletRequest httpRequest) {
+	private JsonError throwException(HttpServletRequest httpRequest) {
 		throw new Error("A generic error was thrown.");
 	}
 	
