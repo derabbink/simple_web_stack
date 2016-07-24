@@ -5,8 +5,12 @@ import static com.abbink.simplewebstack.common.data.generated.Tables.ACCESS_TOKE
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.util.logging.Level;
 
 import javax.inject.Inject;
+
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -24,10 +28,12 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
+import com.abbink.simplewebstack.common.auth.service.WebLoginService;
 import com.abbink.simplewebstack.common.auth.shiro.authtokens.BearerTokenAuthenticationToken;
 import com.abbink.simplewebstack.common.auth.shiro.principals.AppScopedExternalID;
 import com.abbink.simplewebstack.common.data.generated.tables.pojos.AccessTokens;
 
+@Slf4j
 public class BearerTokenRealm extends AuthenticatingRealm {
 	
 	private JdbcDataSource ds;
@@ -78,8 +84,7 @@ public class BearerTokenRealm extends AuthenticatingRealm {
 				getName()
 			);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Unable to read access_token from DB", e);
 		}
 		
 		return null;

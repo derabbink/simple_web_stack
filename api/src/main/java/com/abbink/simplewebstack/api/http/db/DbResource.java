@@ -18,7 +18,6 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
-import com.abbink.simplewebstack.common.data.generated.tables.daos.SomethingDao;
 import com.abbink.simplewebstack.common.data.generated.tables.pojos.Something;
 import com.sun.jersey.api.NotFoundException;
 
@@ -31,11 +30,9 @@ public class DbResource {
 	private JdbcDataSource ds;
 	
 	@GET
-	public Something getStats() {
+	public Something get() {
 		try (Connection conn = ds.getConnection()) {
 			DSLContext create = DSL.using(conn, SQLDialect.H2);
-//			SomethingDao dao = new SomethingDao(create.configuration());
-//			Something res = dao.fetchOneById(2);
 			Something result = create.selectFrom(SOMETHING)
 				.where(SOMETHING.ID.eq(1))
 				.fetchAny()

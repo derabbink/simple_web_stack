@@ -4,6 +4,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.shiro.session.Session;
 import org.apache.shiro.web.mgt.WebSecurityManager;
 import org.apache.shiro.web.subject.WebSubject;
@@ -17,10 +19,8 @@ import com.sun.jersey.spi.container.ContainerRequest;
  * The mechanism always tries to authenticate both, which is needed if the subject wants to log out: Only if principals
  * from both authentication methods exist in the subject can the logout process invalidate both.
  */
+@Slf4j
 public class WebAuthenticationMechanism extends AuthenticationMechanism {
-	
-	public static final String REMEMBER_ME_COOKIE = "acct";
-	public static final String SESSION_CREDENTIALS = WebAuthenticationMechanism.class.getName() + "_SESSION_CREDENTIALS";
 	
 	private WebSecurityManager securityManager;
 	private HttpServletRequest servletRequest;
@@ -45,6 +45,7 @@ public class WebAuthenticationMechanism extends AuthenticationMechanism {
 	 */
 	@Override
 	public ContainerRequest filter(ContainerRequest request) {
+		log.info("Applying WebAuthenticationMechanism to {} {}", request.getMethod(), request.getPath());
 		return doFilter(
 			request,
 			securityManager,

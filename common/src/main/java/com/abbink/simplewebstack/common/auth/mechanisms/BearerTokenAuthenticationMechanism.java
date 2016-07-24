@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.subject.WebSubjectContext;
@@ -20,6 +22,7 @@ import com.abbink.simplewebstack.common.error.UnauthorizedException;
 import com.google.inject.assistedinject.Assisted;
 import com.sun.jersey.spi.container.ContainerRequest;
 
+@Slf4j
 public class BearerTokenAuthenticationMechanism extends AuthenticationMechanism {
 	
 	public static final String TOKEN_NAME = "access_token";
@@ -41,6 +44,7 @@ public class BearerTokenAuthenticationMechanism extends AuthenticationMechanism 
 	
 	@Override
 	public ContainerRequest filter(ContainerRequest request) {
+		log.info("Applying BearerTokenAuthenticationMechanism to {} {}", request.getMethod(), request.getPath());
 		String method = request.getMethod();
 		String token = null;
 		if (GET.equals(method) ||
@@ -50,6 +54,11 @@ public class BearerTokenAuthenticationMechanism extends AuthenticationMechanism 
 			token = request.getQueryParameters().getFirst(TOKEN_NAME);
 		} else if (POST.equals(method)) {
 			token = request.getFormParameters().getFirst(TOKEN_NAME);
+		}
+		// limit token length to prevent DOS attacks based on expensive hashing computation
+		if(token != null && token.length() > 100) {
+			log.trace("Reducing token length to 100 (from {})", token.length());
+			token = token.substring(0, 100);
 		}
 		
 		WebSubjectContext context = new DefaultWebSubjectContext();

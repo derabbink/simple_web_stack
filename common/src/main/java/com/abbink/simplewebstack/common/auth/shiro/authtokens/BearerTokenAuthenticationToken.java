@@ -11,6 +11,7 @@ import com.google.common.base.Strings;
  * The Token ID has length {@link #TOKEN_ID_LENGTH}; all characters following it are considered to be the credentials.
  */
 public class BearerTokenAuthenticationToken implements AuthenticationToken {
+	private static final long serialVersionUID = 550495175614882804L;
 	public static final int TOKEN_ID_LENGTH = 10;
 	
 	private String bearerToken;

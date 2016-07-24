@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import com.abbink.simplewebstack.common.auth.aop.Auth;
 import com.abbink.simplewebstack.common.auth.mechanisms.AuthenticationMechanism;
@@ -21,7 +21,7 @@ import com.sun.jersey.spi.container.ResourceFilter;
 import com.sun.jersey.spi.container.ResourceFilterFactory;
 
 @Singleton
-@Log
+@Slf4j
 public class AuthResourceFilterFactory implements ResourceFilterFactory {
 
 	private Map<Class<? extends AuthenticationMechanism>, AuthenticationMechanism.Factory> authenticationMechanismFactories;
@@ -30,7 +30,9 @@ public class AuthResourceFilterFactory implements ResourceFilterFactory {
 	@Context private HttpServletResponse servletResponseProxy;
 	
 	@Inject
-	public AuthResourceFilterFactory(Map<Class<? extends AuthenticationMechanism>, AuthenticationMechanism.Factory> authenticationMechanismFactories) {
+	public AuthResourceFilterFactory(
+		Map<Class<? extends AuthenticationMechanism>, AuthenticationMechanism.Factory> authenticationMechanismFactories
+	) {
 		this.authenticationMechanismFactories = authenticationMechanismFactories;
 	}
 	
@@ -39,7 +41,7 @@ public class AuthResourceFilterFactory implements ResourceFilterFactory {
 		// documented to only be AbstractSubResourceLocator, AbstractResourceMethod, or AbstractSubResourceMethod
 		if (am instanceof AbstractSubResourceLocator) {
 			// not actually invoked per request, nothing to do
-			log.info("Ignoring AbstractSubResourceLocator " + am);
+			log.debug("Ignoring AbstractSubResourceLocator {}", am);
 			return null;
 		} else if (am instanceof AbstractResourceMethod) {
 			Auth annotation = am.getAnnotation(Auth.class);
@@ -52,10 +54,10 @@ public class AuthResourceFilterFactory implements ResourceFilterFactory {
 				if (mechanismFactory != null) {
 					return Lists.<ResourceFilter>newArrayList(mechanismFactory.create(servletRequestProxy, servletResponseProxy));
 				}
-				log.severe("Could not find AuthenticationMechanism "+ m.getName() +" for "+ am.getClass().getName() + ": " + am);
+				log.error("Could not find AuthenticationMechanism {} for {}: {}", m.getName(), am.getClass().getName(), am);
 			}
 		} else {
-			log.warning("Got an unexpected instance of " + am.getClass().getName() + ": " + am);
+			log.warn("Got an unexpected instance of {}: {}", am.getClass().getName(), am);
 		}
 		return null;
 	}

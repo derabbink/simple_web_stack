@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.collect.Lists;
@@ -18,7 +18,7 @@ import com.sun.jersey.spi.container.ResourceFilter;
 import com.sun.jersey.spi.container.ResourceFilterFactory;
 
 @Singleton
-@Log
+@Slf4j
 public final class HttpStatusCodeMetricResourceFilterFactory implements ResourceFilterFactory {
 	private final MetricRegistry metricRegistry;
 	
@@ -31,7 +31,7 @@ public final class HttpStatusCodeMetricResourceFilterFactory implements Resource
 		// documented to only be AbstractSubResourceLocator, AbstractResourceMethod, or AbstractSubResourceMethod
 		if (am instanceof AbstractSubResourceLocator) {
 			// not actually invoked per request, nothing to do
-			log.info("Ignoring AbstractSubResourceLocator " + am);
+			log.debug("Ignoring AbstractSubResourceLocator {}", am);
 			return null;
 		} else if (am instanceof AbstractResourceMethod) {
 			String metricBaseName = getMetricBaseName((AbstractResourceMethod) am);
@@ -40,7 +40,7 @@ public final class HttpStatusCodeMetricResourceFilterFactory implements Resource
 			return Lists.<ResourceFilter>newArrayList(
 				new HttpStatusCodeMetricResourceFilter(metricRegistry, metricBaseName, resourceClass));
 		} else {
-			log.warning("Got an unexpected instance of " + am.getClass().getName() + ": " + am);
+			log.warn("Got an unexpected instance of {}: {}", am.getClass().getName(), am);
 			return null;
 		}
 	}

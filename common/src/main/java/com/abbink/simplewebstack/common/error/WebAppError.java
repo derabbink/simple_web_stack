@@ -5,6 +5,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 public abstract class WebAppError extends WebApplicationException {
+	private static final long serialVersionUID = 4638973790086123455L;
+	
 	private int code;
 	private String message;
 	

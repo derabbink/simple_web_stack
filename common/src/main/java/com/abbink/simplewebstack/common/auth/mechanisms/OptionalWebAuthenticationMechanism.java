@@ -4,6 +4,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.shiro.web.mgt.WebSecurityManager;
 
 import com.abbink.simplewebstack.common.error.UnauthorizedException;
@@ -14,6 +16,7 @@ import com.sun.jersey.spi.container.ContainerRequest;
  * An AuthenticationMechanism that attempts to authenticate using the FormAuthenticationMechanism,
  * and falls back to using the AnonymousAuthenticationMechanism
  */
+@Slf4j
 public class OptionalWebAuthenticationMechanism extends AuthenticationMechanism {
 	
 	private WebSecurityManager securityManager;
@@ -33,6 +36,7 @@ public class OptionalWebAuthenticationMechanism extends AuthenticationMechanism 
 	
 	@Override
 	public ContainerRequest filter(ContainerRequest request) {
+		log.info("Applying OptionalWebAuthenticationMechanism to {} {}", request.getMethod(), request.getPath());
 		return doFilter(
 			request,
 			securityManager,

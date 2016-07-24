@@ -6,6 +6,7 @@ import com.abbink.simplewebstack.api.error.jersey.NotFoundExceptionMapper;
 import com.abbink.simplewebstack.api.error.jersey.ThrowableMapper;
 import com.abbink.simplewebstack.api.error.jersey.WebAppErrorMapper;
 import com.abbink.simplewebstack.common.error.WebAppError;
+import com.abbink.simplewebstack.common.error.jersey.RedirectMapper;
 import com.abbink.simplewebstack.common.error.jersey.SpecializedExceptionMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
@@ -16,6 +17,11 @@ public class ExceptionMappersModule extends AbstractModule {
 	
 	@Override
 	protected void configure() {
+		requireBinding(RedirectMapper.class);
+		requireBinding(WebAppErrorMapper.class);
+		requireBinding(NotFoundExceptionMapper.class);
+		requireBinding(ThrowableMapper.class);
+		
 		configureWebAppErrorMapper();
 		configureNotFoundExceptionMapper();
 		configureThrowableMapper();

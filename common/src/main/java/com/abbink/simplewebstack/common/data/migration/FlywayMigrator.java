@@ -7,8 +7,12 @@ import org.h2.jdbcx.JdbcDataSource;
 
 public class FlywayMigrator {
 	
-	@Inject
 	private JdbcDataSource ds;
+	
+	@Inject
+	public FlywayMigrator(JdbcDataSource ds) {
+		this.ds = ds;
+	}
 	
 	public void migrate() {
 		String cp = FlywayMigrator.class.getPackage().getName();

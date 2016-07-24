@@ -17,8 +17,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-import lombok.extern.java.Log;
-
 import org.apache.shiro.subject.Subject;
 
 import com.abbink.simplewebstack.common.auth.aop.Auth;
@@ -27,7 +25,6 @@ import com.abbink.simplewebstack.common.auth.service.WebLoginService;
 import com.abbink.simplewebstack.common.http.Redirect;
 import com.sun.jersey.api.view.Viewable;
 
-@Log
 @Path(BASE_PATH + "login")
 @Auth(AnonymousAuthenticationMechanism.class)
 @Produces(MediaType.TEXT_HTML)

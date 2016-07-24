@@ -27,7 +27,7 @@ public class SwsUiModule extends AbstractModule {
 	 * see {@linkplain PackagesResourceConfig.PROPERTY_PACKAGES} for more details
 	 */
 	public static String getResourcePackage() {
-		return "com.abbink.simplewebstack.ui";
+		return "com.abbink.simplewebstack.ui.http";
 	}
 	
 }

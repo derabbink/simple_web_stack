@@ -3,7 +3,6 @@ package com.abbink.simplewebstack.common.error.jersey;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -15,15 +14,15 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import com.abbink.simplewebstack.common.error.WebAppError;
 import com.sun.jersey.api.core.ExtendedUriInfo;
 import com.sun.jersey.api.model.AbstractResourceMethod;
 
-@Log
 @Singleton
 @Provider
+@Slf4j
 public class WebAppErrorMapper implements ExceptionMapper<WebAppError> {
 	
 	private Map<MediaType, SpecializedExceptionMapper<WebAppError>> specializedExceptionMappers;
@@ -40,7 +39,7 @@ public class WebAppErrorMapper implements ExceptionMapper<WebAppError> {
 	
 	@Override
 	public Response toResponse(WebAppError exception) {
-		log.log(Level.INFO, exception.getMessage(), exception);
+		log.info("Mapping WebAppError to response", exception);
 		AbstractResourceMethod am = xUriInfo.getMatchedMethod();
 		List<MediaType> mediaTypes = null;
 		if (am != null) {

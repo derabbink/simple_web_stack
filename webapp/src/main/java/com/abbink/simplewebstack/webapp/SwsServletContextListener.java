@@ -9,8 +9,9 @@ import static com.abbink.simplewebstack.common.data.generated.tables.Users.USERS
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
@@ -30,14 +31,13 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 
+@Slf4j
 public class SwsServletContextListener extends GuiceServletContextListener {
 	
-	private ServletContext servletContext;
 	private Injector injector;
 	
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		servletContext = servletContextEvent.getServletContext();
 		super.contextInitialized(servletContextEvent);
 		
 		JmxReporter reporter = JmxReporter.forRegistry(injector.getInstance(MetricRegistry.class)).build();
@@ -51,7 +51,7 @@ public class SwsServletContextListener extends GuiceServletContextListener {
 	
 	@Override
 	protected Injector getInjector() {
-		injector = Guice.createInjector(new SwsModule(servletContext));
+		injector = Guice.createInjector(new SwsModule());
 		return injector;
 	}
 	
@@ -109,8 +109,7 @@ public class SwsServletContextListener extends GuiceServletContextListener {
 				.values(appScopedBob, b, bSaltS, bHash)
 				.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Could not store intitial data in DB", e);
 		}
 	}
 }

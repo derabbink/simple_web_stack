@@ -30,6 +30,6 @@ public class SwsApiModule extends AbstractModule {
 	 * see {@linkplain PackagesResourceConfig.PROPERTY_PACKAGES} for more details
 	 */
 	public static String getResourcePackage() {
-		return "com.abbink.simplewebstack.api";
+		return "com.abbink.simplewebstack.api.http";
 	}
 }

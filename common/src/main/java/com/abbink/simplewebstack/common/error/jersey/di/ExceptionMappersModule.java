@@ -26,6 +26,7 @@ public class ExceptionMappersModule extends AbstractModule {
 	
 	private void configureRedirectMappers() {
 		bind(RedirectMapper.class);
+		@SuppressWarnings("unused")
 		MapBinder<MediaType, SpecializedExceptionMapper<Redirect>> mapBinder = MapBinder.newMapBinder(
 			binder(),
 			new TypeLiteral<MediaType>() {},
@@ -36,6 +37,7 @@ public class ExceptionMappersModule extends AbstractModule {
 	
 	private void configureWebAppErrorMappers() {
 		bind(WebAppErrorMapper.class);
+		@SuppressWarnings("unused")
 		MapBinder<MediaType, SpecializedExceptionMapper<WebAppError>> mapBinder = MapBinder.newMapBinder(
 			binder(),
 			new TypeLiteral<MediaType>() {},
@@ -46,6 +48,7 @@ public class ExceptionMappersModule extends AbstractModule {
 	
 	private void configureNotFoundExceptionMappers() {
 		bind(NotFoundExceptionMapper.class);
+		@SuppressWarnings("unused")
 		MapBinder<MediaType, SpecializedExceptionMapper<NotFoundException>> mapBinder = MapBinder.newMapBinder(
 			binder(),
 			new TypeLiteral<MediaType>() {},
@@ -56,6 +59,7 @@ public class ExceptionMappersModule extends AbstractModule {
 	
 	private void configureThrowableMappers() {
 		bind(ThrowableMapper.class);
+		@SuppressWarnings("unused")
 		MapBinder<MediaType, SpecializedExceptionMapper<Throwable>> mapBinder = MapBinder.newMapBinder(
 			binder(),
 			new TypeLiteral<MediaType>() {},

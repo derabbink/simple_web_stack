@@ -4,7 +4,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.shiro.web.mgt.WebSecurityManager;
 import org.apache.shiro.web.subject.WebSubject;
@@ -12,7 +12,7 @@ import org.apache.shiro.web.subject.WebSubject;
 import com.google.inject.assistedinject.Assisted;
 import com.sun.jersey.spi.container.ContainerRequest;
 
-@Log
+@Slf4j
 public class AnonymousAuthenticationMechanism extends AuthenticationMechanism {
 	
 	private WebSecurityManager securityManager;
@@ -32,6 +32,7 @@ public class AnonymousAuthenticationMechanism extends AuthenticationMechanism {
 	
 	@Override
 	public ContainerRequest filter(ContainerRequest request) {
+		log.info("Applying AnonymousAuthenticationMechanism to {} {}", request.getMethod(), request.getPath());
 		return doFilter(
 			request,
 			securityManager,

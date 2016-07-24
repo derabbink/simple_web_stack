@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import javax.inject.Inject;
 
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -26,10 +27,11 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
+import com.abbink.simplewebstack.common.auth.service.WebLoginService;
 import com.abbink.simplewebstack.common.auth.shiro.principals.ExternalID;
 import com.abbink.simplewebstack.common.data.generated.tables.pojos.Users;
 
-@Log
+@Slf4j
 public class UsernamePasswordRealm extends AuthenticatingRealm {
 	
 	private JdbcDataSource ds;
@@ -78,7 +80,7 @@ public class UsernamePasswordRealm extends AuthenticatingRealm {
 				getName()
 			);
 		} catch (SQLException e) {
-			log.log(Level.SEVERE, e.getMessage(), e);
+			log.error("Unable to read user from DB", e);
 		}
 		
 		return null;

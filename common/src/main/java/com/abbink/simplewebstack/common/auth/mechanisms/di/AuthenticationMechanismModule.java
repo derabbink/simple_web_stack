@@ -1,20 +1,27 @@
 package com.abbink.simplewebstack.common.auth.mechanisms.di;
 
+import org.apache.shiro.web.mgt.WebSecurityManager;
+
 import com.abbink.simplewebstack.common.auth.mechanisms.AnonymousAuthenticationMechanism;
 import com.abbink.simplewebstack.common.auth.mechanisms.AuthenticationMechanism;
 import com.abbink.simplewebstack.common.auth.mechanisms.BearerTokenAuthenticationMechanism;
 import com.abbink.simplewebstack.common.auth.mechanisms.OptionalWebAuthenticationMechanism;
 import com.abbink.simplewebstack.common.auth.mechanisms.RejectAuthenticationMechanism;
 import com.abbink.simplewebstack.common.auth.mechanisms.WebAuthenticationMechanism;
+import com.abbink.simplewebstack.common.auth.shiro.BearerTokenSecurityManager;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryProvider;
 import com.google.inject.multibindings.MapBinder;
 
+@SuppressWarnings("deprecation")
 public class AuthenticationMechanismModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
+		requireBinding(WebSecurityManager.class);
+		requireBinding(BearerTokenSecurityManager.class);
+		
 		// bind authentication mechanisms
 		MapBinder<Class<? extends AuthenticationMechanism>, AuthenticationMechanism.Factory> mapBinder = MapBinder.newMapBinder(
 			binder(),

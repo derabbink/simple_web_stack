@@ -10,8 +10,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import lombok.extern.java.Log;
-
 import org.apache.shiro.subject.Subject;
 
 import com.abbink.simplewebstack.common.auth.aop.Auth;
@@ -21,7 +19,6 @@ import com.abbink.simplewebstack.common.auth.mechanisms.BearerTokenAuthenticatio
 @Produces(MediaType.APPLICATION_JSON)
 @Path(BASE_PATH + "sandwich/stats")
 @Auth(BearerTokenAuthenticationMechanism.class)
-@Log
 public class SandwichStatsResource {
 	private final SandwichStats sandwichStats;
 	

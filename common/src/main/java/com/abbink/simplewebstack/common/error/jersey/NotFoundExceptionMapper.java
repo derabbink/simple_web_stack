@@ -16,15 +16,15 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import com.sun.jersey.api.NotFoundException;
 import com.sun.jersey.api.core.ExtendedUriInfo;
 import com.sun.jersey.api.model.AbstractResourceMethod;
 
-@Log
 @Singleton
 @Provider
+@Slf4j
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
 	
 	private Map<MediaType, SpecializedExceptionMapper<NotFoundException>> specializedExceptionMappers;
@@ -41,7 +41,7 @@ public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundExceptio
 	
 	@Override
 	public Response toResponse(NotFoundException exception) {
-		log.log(Level.INFO, exception.getMessage(), exception);
+		log.info("Mapping NotFoundException to response", exception);
 		AbstractResourceMethod am = xUriInfo.getMatchedMethod();
 		List<MediaType> mediaTypes = null;
 		if (am != null) {

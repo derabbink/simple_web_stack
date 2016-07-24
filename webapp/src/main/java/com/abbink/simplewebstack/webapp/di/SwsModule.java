@@ -3,8 +3,6 @@ package com.abbink.simplewebstack.webapp.di;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-
 import com.abbink.simplewebstack.api.di.SwsApiModule;
 import com.abbink.simplewebstack.common.auth.di.AuthModule;
 import com.abbink.simplewebstack.common.auth.jersey.AuthResourceFilterFactory;
@@ -21,14 +19,10 @@ import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 
 public class SwsModule extends ServletModule {
 	
-	private ServletContext servletContext;
-	
-	public SwsModule(ServletContext servletContext) {
-		this.servletContext = servletContext;
-	}
-	
 	@Override
 	protected void configureServlets() {
+		install(new ConfigModule());
+		
 		install(new MetricsModule());
 		install(new DataModule());
 		install(new DataMigrationModule());
@@ -48,9 +42,10 @@ public class SwsModule extends ServletModule {
 			HttpStatusCodeMetricResourceFilterFactory.class.getCanonicalName() +","+
 			AuthResourceFilterFactory.class.getCanonicalName()
 		);
+		// Specifying this is merely good form. Most likely it will work without this as well
 		guiceContainerConfig.put(
 			PackagesResourceConfig.PROPERTY_PACKAGES,
-			SwsApiModule.getResourcePackage() +";"+ SwsUiModule.getResourcePackage()
+			SwsApiModule.getResourcePackage() + ";" +SwsUiModule.getResourcePackage()
 		);
 		serve("/*").with(GuiceContainer.class, guiceContainerConfig);
 	}

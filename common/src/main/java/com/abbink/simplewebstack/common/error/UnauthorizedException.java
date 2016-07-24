@@ -3,6 +3,8 @@ package com.abbink.simplewebstack.common.error;
 import javax.ws.rs.core.Response.Status;
 
 public class UnauthorizedException extends WebAppError {
+	private static final long serialVersionUID = 6494575658326412522L;
+
 	public UnauthorizedException(int code, String message) {
 		super(code, message, Status.UNAUTHORIZED);
 	}
