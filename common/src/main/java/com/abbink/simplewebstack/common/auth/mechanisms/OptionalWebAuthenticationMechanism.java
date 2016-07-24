@@ -4,7 +4,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.abbink.simplewebstack.common.auth.shiro.WebSecurityManager;
+import org.apache.shiro.web.mgt.WebSecurityManager;
+
 import com.abbink.simplewebstack.common.error.UnauthorizedException;
 import com.google.inject.assistedinject.Assisted;
 import com.sun.jersey.spi.container.ContainerRequest;
@@ -15,17 +16,17 @@ import com.sun.jersey.spi.container.ContainerRequest;
  */
 public class OptionalWebAuthenticationMechanism extends AuthenticationMechanism {
 	
-	private WebSecurityManager formSecurityManager;
+	private WebSecurityManager securityManager;
 	private HttpServletRequest servletRequest;
 	private HttpServletResponse servletResponse;
 	
 	@Inject
 	public OptionalWebAuthenticationMechanism(
-		WebSecurityManager formSecurityManager,
+		WebSecurityManager securityManager,
 		@Assisted  HttpServletRequest servletRequest,
 		@Assisted  HttpServletResponse servletResponse
 	) {
-		this.formSecurityManager = formSecurityManager;
+		this.securityManager = securityManager;
 		this.servletRequest = servletRequest;
 		this.servletResponse = servletResponse;
 	}
@@ -34,7 +35,7 @@ public class OptionalWebAuthenticationMechanism extends AuthenticationMechanism 
 	public ContainerRequest filter(ContainerRequest request) {
 		return doFilter(
 			request,
-			formSecurityManager,
+			securityManager,
 			servletRequest,
 			servletResponse
 		);
@@ -42,20 +43,25 @@ public class OptionalWebAuthenticationMechanism extends AuthenticationMechanism 
 	
 	static ContainerRequest doFilter(
 		ContainerRequest request,
-		WebSecurityManager formSecurityManager,
+		WebSecurityManager securityManager,
 		HttpServletRequest servletRequest,
 		HttpServletResponse servletResponse
 	) {
 		try {
 			return WebAuthenticationMechanism.doFilter(
 				request,
-				formSecurityManager,
+				securityManager,
 				servletRequest,
 				servletResponse
 			);
 		} catch (UnauthorizedException e) {}
 		
-		return AnonymousAuthenticationMechanism.doFilter(request);
+		return AnonymousAuthenticationMechanism.doFilter(
+			request,
+			securityManager,
+			servletRequest,
+			servletResponse
+		);
 	}
 	
 	

@@ -16,11 +16,11 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
 import com.abbink.simplewebstack.common.auth.aop.Auth;
-import com.abbink.simplewebstack.common.auth.mechanisms.AnonymousAuthenticationMechanism2;
+import com.abbink.simplewebstack.common.auth.mechanisms.AnonymousAuthenticationMechanism;
 import com.sun.jersey.api.view.Viewable;
 
 @Path(BASE_PATH + "aboutme")
-@Auth(AnonymousAuthenticationMechanism2.class)
+@Auth(AnonymousAuthenticationMechanism.class)
 @Produces(MediaType.TEXT_HTML)
 public class AboutMeResource {
 	

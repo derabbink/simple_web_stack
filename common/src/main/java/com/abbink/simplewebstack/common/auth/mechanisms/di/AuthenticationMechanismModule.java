@@ -1,11 +1,11 @@
 package com.abbink.simplewebstack.common.auth.mechanisms.di;
 
-import com.abbink.simplewebstack.common.auth.mechanisms.AnonymousAuthenticationMechanism2;
+import com.abbink.simplewebstack.common.auth.mechanisms.AnonymousAuthenticationMechanism;
 import com.abbink.simplewebstack.common.auth.mechanisms.AuthenticationMechanism;
 import com.abbink.simplewebstack.common.auth.mechanisms.BearerTokenAuthenticationMechanism;
-import com.abbink.simplewebstack.common.auth.mechanisms.OptionalWebAuthenticationMechanism2;
+import com.abbink.simplewebstack.common.auth.mechanisms.OptionalWebAuthenticationMechanism;
 import com.abbink.simplewebstack.common.auth.mechanisms.RejectAuthenticationMechanism;
-import com.abbink.simplewebstack.common.auth.mechanisms.WebAuthenticationMechanism2;
+import com.abbink.simplewebstack.common.auth.mechanisms.WebAuthenticationMechanism;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryProvider;
@@ -22,16 +22,16 @@ public class AuthenticationMechanismModule extends AbstractModule {
 			new TypeLiteral<AuthenticationMechanism.Factory>() {}
 		);
 		// There is no assisted inject available for multibindings yet, so we keep using the deprecated FactoryProvider
-		mapBinder.addBinding(AnonymousAuthenticationMechanism2.class).toProvider(FactoryProvider.newFactory(
-			AuthenticationMechanism.Factory.class, AnonymousAuthenticationMechanism2.class));
+		mapBinder.addBinding(AnonymousAuthenticationMechanism.class).toProvider(FactoryProvider.newFactory(
+			AuthenticationMechanism.Factory.class, AnonymousAuthenticationMechanism.class));
 		mapBinder.addBinding(RejectAuthenticationMechanism.class).toProvider(FactoryProvider.newFactory(
 			AuthenticationMechanism.Factory.class, RejectAuthenticationMechanism.class));
 		mapBinder.addBinding(BearerTokenAuthenticationMechanism.class).toProvider(FactoryProvider.newFactory(
 			AuthenticationMechanism.Factory.class, BearerTokenAuthenticationMechanism.class));
-		mapBinder.addBinding(WebAuthenticationMechanism2.class).toProvider(FactoryProvider.newFactory(
-			AuthenticationMechanism.Factory.class, WebAuthenticationMechanism2.class));
-		mapBinder.addBinding(OptionalWebAuthenticationMechanism2.class).toProvider(FactoryProvider.newFactory(
-			AuthenticationMechanism.Factory.class, OptionalWebAuthenticationMechanism2.class));
+		mapBinder.addBinding(WebAuthenticationMechanism.class).toProvider(FactoryProvider.newFactory(
+			AuthenticationMechanism.Factory.class, WebAuthenticationMechanism.class));
+		mapBinder.addBinding(OptionalWebAuthenticationMechanism.class).toProvider(FactoryProvider.newFactory(
+			AuthenticationMechanism.Factory.class, OptionalWebAuthenticationMechanism.class));
 	}
 
 }

@@ -22,20 +22,20 @@ import lombok.extern.java.Log;
 import org.apache.shiro.subject.Subject;
 
 import com.abbink.simplewebstack.common.auth.aop.Auth;
-import com.abbink.simplewebstack.common.auth.mechanisms.AnonymousAuthenticationMechanism2;
-import com.abbink.simplewebstack.common.auth.service.WebLoginService2;
+import com.abbink.simplewebstack.common.auth.mechanisms.AnonymousAuthenticationMechanism;
+import com.abbink.simplewebstack.common.auth.service.WebLoginService;
 import com.abbink.simplewebstack.common.http.Redirect;
 import com.sun.jersey.api.view.Viewable;
 
 @Log
 @Path(BASE_PATH + "login")
-@Auth(AnonymousAuthenticationMechanism2.class)
+@Auth(AnonymousAuthenticationMechanism.class)
 @Produces(MediaType.TEXT_HTML)
 public class LoginResource {
-	private WebLoginService2 loginService;
+	private WebLoginService loginService;
 	
 	@Inject
-	public LoginResource(WebLoginService2 loginService) {
+	public LoginResource(WebLoginService loginService) {
 		this.loginService = loginService;
 	}
 	

@@ -14,13 +14,13 @@ import lombok.extern.java.Log;
 import org.apache.shiro.subject.Subject;
 
 import com.abbink.simplewebstack.common.auth.aop.Auth;
-import com.abbink.simplewebstack.common.auth.mechanisms.WebAuthenticationMechanism2;
+import com.abbink.simplewebstack.common.auth.mechanisms.WebAuthenticationMechanism;
 import com.abbink.simplewebstack.common.http.Redirect;
 import com.sun.jersey.api.view.Viewable;
 
 @Log
 @Path(BASE_PATH + "logout")
-@Auth(WebAuthenticationMechanism2.class)
+@Auth(WebAuthenticationMechanism.class)
 @Produces(MediaType.TEXT_HTML)
 public class LogoutResource {
 	

@@ -34,22 +34,6 @@ CREATE TABLE `access_tokens` (
 	`expires_at` timestamp
 );
 
-CREATE TABLE `sessions` (
-	`id` char(88) not null primary key, -- SHA512 hash, base64 encoded
-	`credentials` char(88) not null, -- SHA512 hash, base64 encoded
-	`salt` char(24) not null, -- 16 bytes, base64 encoded
-	`user_xid` char(10) not null,
-	`expires_at` timestamp
-);
-
-CREATE TABLE `remember_me_tokens` (
-	`token` char(10) not null primary key,
-	`credentials` char(88) not null, -- SHA512 hash, base64 encoded
-	`salt` char(24) not null, -- 16 bytes, base64 encoded
-	`user_xid` char(10) not null,
-	`expires_at` timestamp
-);
-
 CREATE TABLE `something` (
 	`id` int not null auto_increment primary key,
 	`name` varchar(100) not null

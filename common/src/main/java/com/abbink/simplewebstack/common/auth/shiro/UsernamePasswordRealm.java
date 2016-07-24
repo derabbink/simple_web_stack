@@ -4,8 +4,6 @@ import static com.abbink.simplewebstack.common.data.generated.Tables.USERS;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.logging.Level;
 
 import javax.inject.Inject;
@@ -15,16 +13,13 @@ import lombok.extern.java.Log;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.codec.CodecSupport;
-import org.apache.shiro.crypto.hash.Hash;
 import org.apache.shiro.crypto.hash.Sha512Hash;
 import org.apache.shiro.realm.AuthenticatingRealm;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.h2.jdbcx.JdbcDataSource;
 import org.jooq.DSLContext;
@@ -32,10 +27,6 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 import com.abbink.simplewebstack.common.auth.shiro.principals.ExternalID;
-import com.abbink.simplewebstack.common.auth.shiro.principals.RememberMeToken;
-import com.abbink.simplewebstack.common.auth.shiro.principals.SessionID;
-import com.abbink.simplewebstack.common.data.generated.tables.pojos.RememberMeTokens;
-import com.abbink.simplewebstack.common.data.generated.tables.pojos.Sessions;
 import com.abbink.simplewebstack.common.data.generated.tables.pojos.Users;
 
 @Log

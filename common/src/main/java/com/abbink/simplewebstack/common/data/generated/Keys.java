@@ -8,18 +8,14 @@ import com.abbink.simplewebstack.common.data.generated.tables.AccessTokens;
 import com.abbink.simplewebstack.common.data.generated.tables.AppScopedIds;
 import com.abbink.simplewebstack.common.data.generated.tables.Apps;
 import com.abbink.simplewebstack.common.data.generated.tables.ExternalIds;
-import com.abbink.simplewebstack.common.data.generated.tables.RememberMeTokens;
 import com.abbink.simplewebstack.common.data.generated.tables.SchemaVersion;
-import com.abbink.simplewebstack.common.data.generated.tables.Sessions;
 import com.abbink.simplewebstack.common.data.generated.tables.Something;
 import com.abbink.simplewebstack.common.data.generated.tables.Users;
 import com.abbink.simplewebstack.common.data.generated.tables.records.AccessTokensRecord;
 import com.abbink.simplewebstack.common.data.generated.tables.records.AppScopedIdsRecord;
 import com.abbink.simplewebstack.common.data.generated.tables.records.AppsRecord;
 import com.abbink.simplewebstack.common.data.generated.tables.records.ExternalIdsRecord;
-import com.abbink.simplewebstack.common.data.generated.tables.records.RememberMeTokensRecord;
 import com.abbink.simplewebstack.common.data.generated.tables.records.SchemaVersionRecord;
-import com.abbink.simplewebstack.common.data.generated.tables.records.SessionsRecord;
 import com.abbink.simplewebstack.common.data.generated.tables.records.SomethingRecord;
 import com.abbink.simplewebstack.common.data.generated.tables.records.UsersRecord;
 
@@ -63,9 +59,7 @@ public class Keys {
 	public static final UniqueKey<AppsRecord> CONSTRAINT_1 = UniqueKeys0.CONSTRAINT_1;
 	public static final UniqueKey<AppScopedIdsRecord> CONSTRAINT_9 = UniqueKeys0.CONSTRAINT_9;
 	public static final UniqueKey<AccessTokensRecord> CONSTRAINT_5 = UniqueKeys0.CONSTRAINT_5;
-	public static final UniqueKey<SessionsRecord> CONSTRAINT_8 = UniqueKeys0.CONSTRAINT_8;
-	public static final UniqueKey<RememberMeTokensRecord> CONSTRAINT_6 = UniqueKeys0.CONSTRAINT_6;
-	public static final UniqueKey<SomethingRecord> CONSTRAINT_84 = UniqueKeys0.CONSTRAINT_84;
+	public static final UniqueKey<SomethingRecord> CONSTRAINT_8 = UniqueKeys0.CONSTRAINT_8;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -90,8 +84,6 @@ public class Keys {
 		public static final UniqueKey<AppsRecord> CONSTRAINT_1 = createUniqueKey(Apps.APPS, Apps.APPS.ID);
 		public static final UniqueKey<AppScopedIdsRecord> CONSTRAINT_9 = createUniqueKey(AppScopedIds.APP_SCOPED_IDS, AppScopedIds.APP_SCOPED_IDS.USER_ID, AppScopedIds.APP_SCOPED_IDS.APP_ID);
 		public static final UniqueKey<AccessTokensRecord> CONSTRAINT_5 = createUniqueKey(AccessTokens.ACCESS_TOKENS, AccessTokens.ACCESS_TOKENS.ID);
-		public static final UniqueKey<SessionsRecord> CONSTRAINT_8 = createUniqueKey(Sessions.SESSIONS, Sessions.SESSIONS.ID);
-		public static final UniqueKey<RememberMeTokensRecord> CONSTRAINT_6 = createUniqueKey(RememberMeTokens.REMEMBER_ME_TOKENS, RememberMeTokens.REMEMBER_ME_TOKENS.TOKEN);
-		public static final UniqueKey<SomethingRecord> CONSTRAINT_84 = createUniqueKey(Something.SOMETHING, Something.SOMETHING.ID);
+		public static final UniqueKey<SomethingRecord> CONSTRAINT_8 = createUniqueKey(Something.SOMETHING, Something.SOMETHING.ID);
 	}
 }
