@@ -1,15 +1,13 @@
 apply plugin: 'war'
 
 dependencies {
-	compile 'com.sun.jersey.contribs:jersey-guice:1.19'
+	compile 'com.sun.jersey.contribs:jersey-guice:1.19.1'
 	compile 'io.dropwizard.metrics:metrics-core:3.1.2'
-	compile 'org.flywaydb:flyway-core:3.2.1'
-	compile 'org.jooq:jooq:3.6.2'
-	compile 'javax.persistence:persistence-api:1.0.2'
-	compile 'com.h2database:h2:1.4.187'
-	compile 'org.apache.shiro:shiro-core:1.2.3'
-	compile 'org.apache.shiro:shiro-web:1.2.3'
-	compile 'org.apache.httpcomponents:httpclient:4.5.2'
+	compile 'org.flywaydb:flyway-core:4.0.3'
+	compile 'org.jooq:jooq:3.8.4'
+	compile 'com.h2database:h2:1.4.192'
+	compile 'org.apache.shiro:shiro-core:1.2.6'
+	compile 'org.apache.shiro:shiro-web:1.2.6'
 	
 	providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 }
