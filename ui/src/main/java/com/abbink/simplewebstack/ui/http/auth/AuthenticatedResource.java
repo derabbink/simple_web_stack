@@ -1,4 +1,4 @@
-package com.abbink.simplewebstack.ui.http.index;
+package com.abbink.simplewebstack.ui.http.auth;
 
 import static com.abbink.simplewebstack.ui.utils.Constants.BASE_PATH;
 
@@ -10,18 +10,21 @@ import javax.ws.rs.core.MediaType;
 
 import lombok.extern.slf4j.Slf4j;
 
+import com.abbink.simplewebstack.common.auth.aop.Auth;
+import com.abbink.simplewebstack.common.auth.mechanisms.WebAuthenticationMechanism;
 import com.sun.jersey.api.view.Viewable;
 
 @Slf4j
 @Singleton
-@Path(BASE_PATH)
+@Path(BASE_PATH + "authenticated")
+@Auth(WebAuthenticationMechanism.class)
 @Produces(MediaType.TEXT_HTML)
-public class IndexResource {
+public class AuthenticatedResource {
 	
 	@GET
 	public Viewable get() {
 		log.trace("get");
-		return new Viewable("/index");
+		return new Viewable("/auth/authenticated");
 	}
 	
 }

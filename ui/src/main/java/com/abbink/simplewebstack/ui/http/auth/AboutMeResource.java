@@ -5,6 +5,7 @@ import static com.abbink.simplewebstack.ui.utils.Constants.BASE_PATH;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Singleton;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -12,15 +13,19 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
 import com.abbink.simplewebstack.common.auth.aop.Auth;
-import com.abbink.simplewebstack.common.auth.mechanisms.AnonymousAuthenticationMechanism;
+import com.abbink.simplewebstack.common.auth.mechanisms.OptionalWebAuthenticationMechanism;
 import com.sun.jersey.api.view.Viewable;
 
+@Slf4j
+@Singleton
 @Path(BASE_PATH + "aboutme")
-@Auth(AnonymousAuthenticationMechanism.class)
+@Auth(OptionalWebAuthenticationMechanism.class)
 @Produces(MediaType.TEXT_HTML)
 public class AboutMeResource {
 	
@@ -29,6 +34,7 @@ public class AboutMeResource {
 		@Context Subject subject,
 		@Context UriInfo uriInfo
 	) {
+		log.trace("get");
 		Map<String, Object> model = new HashMap<String, Object>();
 		if (subject != null) {
 			model.put("hasSubject", true);

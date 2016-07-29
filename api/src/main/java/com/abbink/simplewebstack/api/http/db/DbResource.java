@@ -13,6 +13,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.h2.jdbcx.JdbcDataSource;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
@@ -21,6 +23,7 @@ import org.jooq.impl.DSL;
 import com.abbink.simplewebstack.common.data.generated.tables.pojos.Something;
 import com.sun.jersey.api.NotFoundException;
 
+@Slf4j
 @Singleton
 @Produces(MediaType.APPLICATION_JSON)
 @Path(BASE_PATH + "db")
@@ -31,6 +34,7 @@ public class DbResource {
 	
 	@GET
 	public Something get() {
+		log.trace("get");
 		try (Connection conn = ds.getConnection()) {
 			DSLContext create = DSL.using(conn, SQLDialect.H2);
 			Something result = create.selectFrom(SOMETHING)

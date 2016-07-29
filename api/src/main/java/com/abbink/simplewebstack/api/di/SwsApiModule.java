@@ -28,6 +28,7 @@ public class SwsApiModule extends AbstractModule {
 	/**
 	 * package name that contains jersey resources
 	 * see {@linkplain PackagesResourceConfig.PROPERTY_PACKAGES} for more details
+	 * Only required if you don't want to bind all resources using Guice
 	 */
 	public static String getResourcePackage() {
 		return "com.abbink.simplewebstack.api.http";

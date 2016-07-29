@@ -10,20 +10,24 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.abbink.simplewebstack.api.error.JsonError;
 
+@Slf4j
 @Singleton
 @Produces(MediaType.APPLICATION_JSON)
 @Path(BASE_PATH + "error")
 public class GenericErrorResource {
 	
 	@GET
-	public JsonError getError(@Context HttpServletRequest httpRequest) {
+	public JsonError get(@Context HttpServletRequest httpRequest) {
+		log.trace("get");
 		return throwException(httpRequest);
 	}
 	
 	private JsonError throwException(HttpServletRequest httpRequest) {
-		throw new Error("A generic error was thrown.");
+		throw new Error("A generic error ocurred.");
 	}
 	
 }

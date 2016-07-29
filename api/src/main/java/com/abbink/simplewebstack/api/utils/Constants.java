@@ -6,6 +6,5 @@ public final class Constants {
 	 */
 	private Constants() {}
 	
-	public static final String BASE_PATH_SEGMENT = "api";
-	public static final String BASE_PATH = "/"+ BASE_PATH_SEGMENT +"/";
+	public static final String BASE_PATH = "/api/";
 }

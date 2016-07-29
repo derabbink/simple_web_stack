@@ -13,7 +13,6 @@ import com.abbink.simplewebstack.common.metrics.di.MetricsModule;
 import com.abbink.simplewebstack.common.metrics.response.HttpStatusCodeMetricResourceFilterFactory;
 import com.abbink.simplewebstack.ui.di.SwsUiModule;
 import com.google.inject.servlet.ServletModule;
-import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 
@@ -42,11 +41,13 @@ public class SwsModule extends ServletModule {
 			HttpStatusCodeMetricResourceFilterFactory.class.getCanonicalName() +","+
 			AuthResourceFilterFactory.class.getCanonicalName()
 		);
-		// Specifying this is merely good form. Most likely it will work without this as well
+		// If you do this, you can skip binding resource classes using Guice
+		/*
 		guiceContainerConfig.put(
 			PackagesResourceConfig.PROPERTY_PACKAGES,
 			SwsApiModule.getResourcePackage() + ";" +SwsUiModule.getResourcePackage()
 		);
+		*/
 		serve("/*").with(GuiceContainer.class, guiceContainerConfig);
 	}
 	

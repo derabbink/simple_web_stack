@@ -10,11 +10,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.abbink.simplewebstack.api.error.JsonError;
 import com.abbink.simplewebstack.common.auth.aop.Auth;
 import com.abbink.simplewebstack.common.auth.mechanisms.BearerTokenAuthenticationMechanism;
 import com.abbink.simplewebstack.common.error.ForbiddenException;
 
+@Slf4j
 @Singleton
 @Auth(BearerTokenAuthenticationMechanism.class)
 @Produces(MediaType.APPLICATION_JSON)
@@ -22,7 +25,8 @@ import com.abbink.simplewebstack.common.error.ForbiddenException;
 public class Error403Resource {
 	
 	@GET
-	public JsonError getError(@Context HttpServletRequest httpRequest) {
+	public JsonError get(@Context HttpServletRequest httpRequest) {
+		log.trace("get");
 		return throwException(httpRequest);
 	}
 	

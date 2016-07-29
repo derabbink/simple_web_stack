@@ -10,11 +10,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.shiro.subject.Subject;
 
 import com.abbink.simplewebstack.common.auth.aop.Auth;
 import com.abbink.simplewebstack.common.auth.mechanisms.BearerTokenAuthenticationMechanism;
 
+@Slf4j
 @Singleton
 @Produces(MediaType.APPLICATION_JSON)
 @Path(BASE_PATH + "sandwich/stats")
@@ -28,7 +31,8 @@ public class SandwichStatsResource {
 	}
 	
 	@GET
-	public SandwichStats.StatsSnapshot getStats(@Context Subject sub) {
+	public SandwichStats.StatsSnapshot get(@Context Subject sub) {
+		log.trace("get");
 		return sandwichStats.getStats();
 	}
 }
