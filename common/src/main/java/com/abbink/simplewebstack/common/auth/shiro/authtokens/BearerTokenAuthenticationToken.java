@@ -22,16 +22,16 @@ public class BearerTokenAuthenticationToken implements AuthenticationToken {
 
 	@Override
 	public Object getPrincipal() {
-		if (Strings.isNullOrEmpty(bearerToken) || bearerToken.length() < TOKEN_ID_LENGTH+1) {
+		if (Strings.isNullOrEmpty(bearerToken) || bearerToken.length() <= TOKEN_ID_LENGTH) {
 			return null;
 		}
 		
-		return bearerToken.substring(bearerToken.length()-TOKEN_ID_LENGTH);
+		return bearerToken.substring(bearerToken.length() - TOKEN_ID_LENGTH);
 	}
 
 	@Override
 	public Object getCredentials() {
-		if (Strings.isNullOrEmpty(bearerToken) || bearerToken.length() < TOKEN_ID_LENGTH+1) {
+		if (Strings.isNullOrEmpty(bearerToken) || bearerToken.length() <= TOKEN_ID_LENGTH) {
 			return null;
 		}
 		return bearerToken.substring(0, TOKEN_ID_LENGTH);

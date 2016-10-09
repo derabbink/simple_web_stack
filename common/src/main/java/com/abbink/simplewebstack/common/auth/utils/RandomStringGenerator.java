@@ -3,9 +3,11 @@ package com.abbink.simplewebstack.common.auth.utils;
 import java.nio.ByteBuffer;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.apache.shiro.crypto.RandomNumberGenerator;
 
+@Singleton
 public class RandomStringGenerator {
 	public static final String DEFAULT_ALPHABET = "ABCDEFGHIHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	

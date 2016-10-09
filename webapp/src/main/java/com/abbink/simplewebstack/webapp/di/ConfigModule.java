@@ -1,7 +1,7 @@
 package com.abbink.simplewebstack.webapp.di;
 
-import static com.abbink.simplewebstack.common.data.di.DataModule.JDBC_URL;
-import static com.abbink.simplewebstack.common.data.di.DataModule.SQL_DIALECT;
+import static com.abbink.simplewebstack.data.di.DataModule.JDBC_URL;
+import static com.abbink.simplewebstack.data.di.DataModule.SQL_DIALECT;
 import static com.abbink.simplewebstack.common.auth.shiro.di.AuthShiroModule.SHIRO_REMEMBERME_KEY;
 
 import com.google.inject.AbstractModule;

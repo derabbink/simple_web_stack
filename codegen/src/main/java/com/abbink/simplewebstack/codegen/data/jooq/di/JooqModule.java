@@ -16,6 +16,8 @@ import com.google.inject.Provides;
 import com.google.inject.name.Names;
 
 public class JooqModule extends AbstractModule {
+	public static final String JOOQ_PACKAGE_NAME = "JOOQ_PACKAGE_NAME";
+	public static final String JOOQ_DIRECTORY = "JOOQ_DIRECTORY";
 	
 	@Override
 	protected void configure() {
@@ -31,7 +33,9 @@ public class JooqModule extends AbstractModule {
 	@Provides
 	public Generator provideGenerator(
 		Generate generate,
-		@Named("GeneratorName") String generatorName
+		@Named("GeneratorName") String generatorName,
+		@Named(JOOQ_PACKAGE_NAME) String jooqPackageName,
+		@Named(JOOQ_DIRECTORY) String jooqDirectory
 	) {
 		return new Generator()
 			.withGenerate(generate)
@@ -43,8 +47,8 @@ public class JooqModule extends AbstractModule {
 				.withInputSchema("PUBLIC")
 			)
 			.withTarget(new Target()
-				.withPackageName("com.abbink.simplewebstack.common.data.generated")
-				.withDirectory("../common/src/main/java")
+				.withPackageName(jooqPackageName)
+				.withDirectory(jooqDirectory)
 			);
 	}
 }

@@ -1,10 +1,10 @@
 package com.abbink.simplewebstack.webapp;
 
-import static com.abbink.simplewebstack.common.data.generated.tables.AccessTokens.ACCESS_TOKENS;
-import static com.abbink.simplewebstack.common.data.generated.tables.AppScopedIds.APP_SCOPED_IDS;
-import static com.abbink.simplewebstack.common.data.generated.tables.Apps.APPS;
-import static com.abbink.simplewebstack.common.data.generated.tables.Something.SOMETHING;
-import static com.abbink.simplewebstack.common.data.generated.tables.Users.USERS;
+import static com.abbink.simplewebstack.data.generated.tables.AccessTokens.ACCESS_TOKENS;
+import static com.abbink.simplewebstack.data.generated.tables.AppScopedIds.APP_SCOPED_IDS;
+import static com.abbink.simplewebstack.data.generated.tables.Apps.APPS;
+import static com.abbink.simplewebstack.data.generated.tables.Something.SOMETHING;
+import static com.abbink.simplewebstack.data.generated.tables.Users.USERS;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,7 +23,7 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 import com.abbink.simplewebstack.common.auth.utils.RandomStringGenerator;
-import com.abbink.simplewebstack.common.data.migration.FlywayMigrator;
+import com.abbink.simplewebstack.data.migration.FlywayMigrator;
 import com.abbink.simplewebstack.webapp.di.SwsModule;
 import com.codahale.metrics.JmxReporter;
 import com.codahale.metrics.MetricRegistry;

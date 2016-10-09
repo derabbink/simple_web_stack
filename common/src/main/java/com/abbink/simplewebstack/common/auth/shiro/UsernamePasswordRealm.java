@@ -1,14 +1,12 @@
 package com.abbink.simplewebstack.common.auth.shiro;
 
-import static com.abbink.simplewebstack.common.data.generated.Tables.USERS;
+import static com.abbink.simplewebstack.data.generated.Tables.USERS;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Level;
 
 import javax.inject.Inject;
 
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -27,9 +25,13 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
-import com.abbink.simplewebstack.common.auth.service.WebLoginService;
-import com.abbink.simplewebstack.common.auth.shiro.principals.ExternalID;
-import com.abbink.simplewebstack.common.data.generated.tables.pojos.Users;
+import com.abbink.simplewebstack.common.auth.shiro.principals.AppScopedXID;
+import com.abbink.simplewebstack.common.auth.shiro.principals.CanonicalXID;
+import com.abbink.simplewebstack.common.auth.shiro.principals.Principal;
+import com.abbink.simplewebstack.common.auth.shiro.principals.UserID;
+import com.abbink.simplewebstack.common.auth.shiro.principals.UserXID;
+import com.abbink.simplewebstack.data.generated.tables.pojos.Users;
+import com.google.common.collect.Lists;
 
 @Slf4j
 public class UsernamePasswordRealm extends AuthenticatingRealm {
@@ -61,8 +63,7 @@ public class UsernamePasswordRealm extends AuthenticatingRealm {
 		
 		try (Connection conn = ds.getConnection()) {
 			DSLContext dsl = DSL.using(conn, dialect);
-			Users u = dsl.select()
-				.from(USERS)
+			Users u = dsl.selectFrom(USERS)
 				.where(USERS.NAME.eq(username))
 				.fetchAnyInto(Users.class);
 			if (u == null) {
@@ -74,7 +75,10 @@ public class UsernamePasswordRealm extends AuthenticatingRealm {
 			ByteSource salt = ByteSource.Util.bytes(storedSalt);
 			
 			return new SimpleAuthenticationInfo(
-				new ExternalID(u.getXid()),
+				Lists.<Principal<?>>newArrayList(
+					new CanonicalXID(u.getXid()),
+					new UserID(u.getId())
+				),
 				u.getPassword(),
 				salt,
 				getName()

@@ -8,7 +8,7 @@ import org.jooq.util.GenerationTool;
 import org.jooq.util.jaxb.Configuration;
 
 import com.abbink.simplewebstack.codegen.di.CodegenModule;
-import com.abbink.simplewebstack.common.data.migration.FlywayMigrator;
+import com.abbink.simplewebstack.data.migration.FlywayMigrator;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 

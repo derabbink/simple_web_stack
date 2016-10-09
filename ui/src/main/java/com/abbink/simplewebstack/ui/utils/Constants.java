@@ -1,6 +1,6 @@
 package com.abbink.simplewebstack.ui.utils;
 
-public class Constants {
+public abstract class Constants {
 	/**
 	 * Don't instantiate this
 	 */

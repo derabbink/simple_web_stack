@@ -1,7 +1,7 @@
 package com.abbink.simplewebstack.api.http.db;
 
 import static com.abbink.simplewebstack.api.utils.Constants.BASE_PATH;
-import static com.abbink.simplewebstack.common.data.generated.tables.Something.SOMETHING;
+import static com.abbink.simplewebstack.data.generated.tables.Something.SOMETHING;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
-import com.abbink.simplewebstack.common.data.generated.tables.pojos.Something;
+import com.abbink.simplewebstack.data.generated.tables.pojos.Something;
 import com.sun.jersey.api.NotFoundException;
 
 @Slf4j

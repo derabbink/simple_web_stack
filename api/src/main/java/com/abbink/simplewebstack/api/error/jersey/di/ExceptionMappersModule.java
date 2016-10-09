@@ -53,4 +53,4 @@ public class ExceptionMappersModule extends AbstractModule {
 		);
 		mapBinder.addBinding(MediaType.APPLICATION_JSON_TYPE).to(ThrowableMapper.class);
 	}
-}	
+}

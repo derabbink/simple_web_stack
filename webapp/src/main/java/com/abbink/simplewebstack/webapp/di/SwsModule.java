@@ -6,8 +6,9 @@ import java.util.Map;
 import com.abbink.simplewebstack.api.di.SwsApiModule;
 import com.abbink.simplewebstack.common.auth.di.AuthModule;
 import com.abbink.simplewebstack.common.auth.jersey.AuthResourceFilterFactory;
-import com.abbink.simplewebstack.common.data.di.DataModule;
-import com.abbink.simplewebstack.common.data.migration.di.DataMigrationModule;
+import com.abbink.simplewebstack.common.auth.jersey.OverrideInputTypeResourceFilterFactory;
+import com.abbink.simplewebstack.data.di.DataModule;
+import com.abbink.simplewebstack.data.migration.di.DataMigrationModule;
 import com.abbink.simplewebstack.common.error.jersey.di.ExceptionMappersModule;
 import com.abbink.simplewebstack.common.metrics.di.MetricsModule;
 import com.abbink.simplewebstack.common.metrics.response.HttpStatusCodeMetricResourceFilterFactory;
@@ -39,7 +40,8 @@ public class SwsModule extends ServletModule {
 		guiceContainerConfig.put(
 			ResourceConfig.PROPERTY_RESOURCE_FILTER_FACTORIES,
 			HttpStatusCodeMetricResourceFilterFactory.class.getCanonicalName() +","+
-			AuthResourceFilterFactory.class.getCanonicalName()
+			AuthResourceFilterFactory.class.getCanonicalName() +","+
+			OverrideInputTypeResourceFilterFactory.class.getCanonicalName()
 		);
 		// If you do this, you can skip binding resource classes using Guice
 		/*

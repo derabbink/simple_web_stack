@@ -2,8 +2,9 @@ package com.abbink.simplewebstack.ui.di;
 
 import com.abbink.simplewebstack.ui.error.jersey.di.ExceptionMappersModule;
 import com.abbink.simplewebstack.ui.freemarker.di.FreemarkerModule;
-import com.abbink.simplewebstack.ui.http.auth.di.AuthModule;
 import com.abbink.simplewebstack.ui.http.index.di.IndexModule;
+import com.abbink.simplewebstack.ui.http.login.di.LoginModule;
+import com.abbink.simplewebstack.ui.http.oauth2.di.OAuth2Module;
 import com.google.inject.AbstractModule;
 import com.sun.jersey.api.core.PackagesResourceConfig;
 
@@ -19,7 +20,8 @@ public class SwsUiModule extends AbstractModule {
 		
 		// install resources
 		install(new IndexModule());
-		install(new AuthModule());
+		install(new LoginModule());
+		install(new OAuth2Module());
 	}
 	
 	/**

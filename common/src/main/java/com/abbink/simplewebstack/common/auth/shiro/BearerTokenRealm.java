@@ -1,15 +1,15 @@
 package com.abbink.simplewebstack.common.auth.shiro;
 
-import static com.abbink.simplewebstack.common.data.generated.Tables.ACCESS_TOKENS;
+import static com.abbink.simplewebstack.data.generated.Tables.ACCESS_TOKENS;
+import static com.abbink.simplewebstack.data.generated.Tables.APP_SCOPED_IDS;
+import static com.abbink.simplewebstack.data.generated.Tables.USERS;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Instant;
-import java.util.logging.Level;
 
 import javax.inject.Inject;
 
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -25,13 +25,19 @@ import org.apache.shiro.realm.AuthenticatingRealm;
 import org.apache.shiro.util.ByteSource;
 import org.h2.jdbcx.JdbcDataSource;
 import org.jooq.DSLContext;
+import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
-import com.abbink.simplewebstack.common.auth.service.WebLoginService;
 import com.abbink.simplewebstack.common.auth.shiro.authtokens.BearerTokenAuthenticationToken;
-import com.abbink.simplewebstack.common.auth.shiro.principals.AppScopedExternalID;
-import com.abbink.simplewebstack.common.data.generated.tables.pojos.AccessTokens;
+import com.abbink.simplewebstack.common.auth.shiro.principals.AppScopedXID;
+import com.abbink.simplewebstack.common.auth.shiro.principals.CanonicalXID;
+import com.abbink.simplewebstack.common.auth.shiro.principals.Principal;
+import com.abbink.simplewebstack.common.auth.shiro.principals.UserID;
+import com.abbink.simplewebstack.data.generated.tables.pojos.AccessTokens;
+import com.abbink.simplewebstack.data.generated.tables.pojos.AppScopedIds;
+import com.abbink.simplewebstack.data.generated.tables.pojos.Users;
+import com.google.common.collect.Lists;
 
 @Slf4j
 public class BearerTokenRealm extends AuthenticatingRealm {
@@ -61,14 +67,18 @@ public class BearerTokenRealm extends AuthenticatingRealm {
 		
 		try (Connection conn = ds.getConnection()) {
 			DSLContext dsl = DSL.using(conn, dialect);
-			AccessTokens at = dsl.select()
+			Record r = dsl.select()
 				.from(ACCESS_TOKENS)
+				.join(APP_SCOPED_IDS).on(ACCESS_TOKENS.APP_SCOPED_USER_XID.eq(APP_SCOPED_IDS.APP_SCOPED_USER_XID))
+				.join(USERS).on(APP_SCOPED_IDS.USER_ID.eq(USERS.ID))
 				.where(ACCESS_TOKENS.TOKEN_SCOPED_USER_XID.eq((String) bearerToken.getPrincipal()))
-				.fetchAnyInto(AccessTokens.class);
-			if (at == null) {
+				.fetchAny();
+			AccessTokens at = r.into(AccessTokens.class);
+			AppScopedIds asId = r.into(AppScopedIds.class);
+			Users u = r.into(Users.class);
+			if (at == null || asId == null || u == null) {
 				return null;
 			}
-			
 			if (at.getExpiresAt().toInstant().isBefore(Instant.now())) {
 				throw new ExpiredCredentialsException("No valid access token provided.");
 			}
@@ -78,7 +88,11 @@ public class BearerTokenRealm extends AuthenticatingRealm {
 			ByteSource salt = ByteSource.Util.bytes(storedSalt);
 			
 			return new SimpleAuthenticationInfo(
-				new AppScopedExternalID(at.getAppScopedUserXid()),
+				Lists.<Principal<?>>newArrayList(
+					new AppScopedXID(at.getAppScopedUserXid()),
+					new CanonicalXID(u.getXid()),
+					new UserID(u.getId())
+				),
 				at.getToken(),
 				salt,
 				getName()

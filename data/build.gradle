@@ -1,0 +1,9 @@
+apply plugin: 'war'
+
+dependencies {
+	compile 'org.flywaydb:flyway-core:4.0.3'
+	compile 'org.jooq:jooq:3.8.4'
+	compile 'com.h2database:h2:1.4.192'
+	
+	providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+}

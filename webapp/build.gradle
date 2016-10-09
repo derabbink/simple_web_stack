@@ -3,6 +3,7 @@ apply plugin: 'jetty'
 
 dependencies {
 	compile project(':common')
+	compile project(':data')
 	compile project(':api')
 	compile project(':ui')
 	
